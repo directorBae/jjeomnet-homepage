@@ -3,11 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "description": "쩜넷(JJeomNet) — 실전 프로젝트 커뮤니티 공식 홈페이지",
+  "engines": {
+    "node": ">=18.18.0"
+  },
   "scripts": {
+    "predev": "node scripts/subset-fonts.mjs",
     "dev": "next dev",
-    "dev:clean": "node scripts/clean.mjs && next dev",
+    "dev:clean": "npm run clean && npm run dev",
+    "prebuild": "node scripts/subset-fonts.mjs",
     "build": "next build",
-    "build:clean": "node scripts/clean.mjs && next build",
+    "build:clean": "npm run clean && npm run build",
     "start": "next start",
     "lint": "next lint",
     "clean": "node scripts/clean.mjs",

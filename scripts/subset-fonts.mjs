@@ -23,6 +23,13 @@ const ROOT = path.join(__dirname, '..');
 const HTML = process.argv[2] || path.join(ROOT, '..', '쩜넷 홈페이지.html');
 const OUT = path.join(ROOT, 'public', 'fonts');
 
+// predev/prebuild에서 자동 실행되므로, 원본 폰트 소스(HTML)가 없는 환경(CI·배포 등)에서는
+// 커밋된 public/fonts woff2를 그대로 쓰도록 조용히 건너뜁니다.
+if (!fs.existsSync(HTML)) {
+  console.warn(`[subset-fonts] 원본 폰트 소스가 없어 서브셋 생성을 건너뜁니다: ${HTML}`);
+  process.exit(0);
+}
+
 const FONT_UUIDS = {
   400: '25519436-8706-4fc2-87c5-fe5dee3429cc',
   500: 'c170600e-66ab-4d98-aec7-aaf4b91d8a6f',
@@ -62,29 +69,36 @@ function extractFonts() {
   return out;
 }
 
-const glyphs = new Set();
-collectGlyphs(path.join(ROOT, 'src'), glyphs);
-for (const ch of SAFETY) glyphs.add(ch);
-const text = [...glyphs].join('');
-console.log(`수집한 글자 수: ${glyphs.size}`);
+// 폰트 서브셋은 편의 기능이므로, 어떤 이유로든 실패해도 빌드를 깨지 않습니다.
+// (실패 시 이미 커밋된 public/fonts woff2를 그대로 사용)
+try {
+  const glyphs = new Set();
+  collectGlyphs(path.join(ROOT, 'src'), glyphs);
+  for (const ch of SAFETY) glyphs.add(ch);
+  const text = [...glyphs].join('');
+  console.log(`수집한 글자 수: ${glyphs.size}`);
 
-const fonts = extractFonts();
-fs.mkdirSync(OUT, { recursive: true });
+  const fonts = extractFonts();
+  fs.mkdirSync(OUT, { recursive: true });
 
-// OG 이미지(next/og)는 satori가 ttf/woff를 요구하므로 800·500 weight를 TTF로도 저장
-const OG_ASSETS = path.join(ROOT, 'src', 'app', '_assets');
-const OG_WEIGHTS = new Set(['800', '500']);
-fs.mkdirSync(OG_ASSETS, { recursive: true });
+  // OG 이미지(next/og)는 satori가 ttf/woff를 요구하므로 800·500 weight를 TTF로도 저장
+  const OG_ASSETS = path.join(ROOT, 'src', 'app', '_assets');
+  const OG_WEIGHTS = new Set(['800', '500']);
+  fs.mkdirSync(OG_ASSETS, { recursive: true });
 
-for (const [weight, buf] of Object.entries(fonts)) {
-  const woff2 = await subsetFont(buf, text, { targetFormat: 'woff2' });
-  fs.writeFileSync(path.join(OUT, `Freesentation-${weight}.woff2`), woff2);
-  console.log(`public/fonts/Freesentation-${weight}.woff2  ${(woff2.length / 1024).toFixed(1)}KB`);
+  for (const [weight, buf] of Object.entries(fonts)) {
+    const woff2 = await subsetFont(buf, text, { targetFormat: 'woff2' });
+    fs.writeFileSync(path.join(OUT, `Freesentation-${weight}.woff2`), woff2);
+    console.log(`public/fonts/Freesentation-${weight}.woff2  ${(woff2.length / 1024).toFixed(1)}KB`);
 
-  if (OG_WEIGHTS.has(weight)) {
-    const ttf = await subsetFont(buf, text, { targetFormat: 'truetype' });
-    fs.writeFileSync(path.join(OG_ASSETS, `Freesentation-${weight}.ttf`), ttf);
-    console.log(`src/app/_assets/Freesentation-${weight}.ttf  ${(ttf.length / 1024).toFixed(1)}KB`);
+    if (OG_WEIGHTS.has(weight)) {
+      const ttf = await subsetFont(buf, text, { targetFormat: 'truetype' });
+      fs.writeFileSync(path.join(OG_ASSETS, `Freesentation-${weight}.ttf`), ttf);
+      console.log(`src/app/_assets/Freesentation-${weight}.ttf  ${(ttf.length / 1024).toFixed(1)}KB`);
+    }
   }
+  console.log('완료.');
+} catch (err) {
+  console.warn('[subset-fonts] 서브셋 생성 실패 — 기존 woff2를 사용합니다:', err?.message || err);
+  process.exit(0);
 }
-console.log('완료.');

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Photo from '@/components/Photo';
+import NoiseHoverImage from '@/components/NoiseHoverImage';
 import { CtaButtons } from '@/components/Cta';
 import JsonLd from '@/components/JsonLd';
 import { EVENTS } from '@/lib/events';
@@ -95,7 +95,7 @@ export default function EventsPage() {
               alignItems: 'center',
             }}
           >
-            <Photo src={ev.photo} alt={`${ev.name} 현장`} ratio="4 / 3" radius={18} sizes="(max-width: 900px) 100vw, 500px" />
+            <NoiseHoverImage src={ev.photo} alt={`${ev.name} 현장`} color={ev.color} ratio="4 / 3" radius={18} sizes="(max-width: 900px) 100vw, 500px" />
             <div>
               <span
                 style={{
