@@ -1,0 +1,203 @@
+/* ─────────────────────────────────────────────────────────────
+   쩜넷 — 전역 스타일
+   디자인 토큰(컬러/타이포/스페이싱)은 인스타 카드뉴스 Figma에서 가져왔고,
+   웹사이트에 맞게 재구성했습니다. 시그니처 컬러는 하나의 sky-blue.
+   ───────────────────────────────────────────────────────────── */
+
+/* 폰트(Freesentation)는 next/font/local로 로드합니다 → src/app/fonts.ts
+   next/font가 --jn-font 변수를 <html>에 주입하며, 파일 내용 해시로 캐시를 자동 무효화합니다. */
+
+/* ── 디자인 토큰 ───────────────────────────────────────────── */
+:root {
+  --jn-paper: #f0f2f6;
+  --jn-ink: #00041a;
+  --jn-bg: #07080c;
+  --jn-sky: #86c3fa;
+  --jn-sky-soft: #a9d4fb;
+  --jn-green: #5ef479;
+  --jn-pink: #ffbaba;
+  --jn-violet: #a594f7;
+  --jn-danger: #ff8b8b;
+
+  /* next/font 미적용 시를 대비한 시스템 폰트 폴백 */
+  --jn-font-fallback: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+    'Segoe UI', 'Malgun Gothic', Roboto, sans-serif;
+}
+
+/* ── 리셋 ──────────────────────────────────────────────────── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* 고정 헤더 높이만큼 앵커 스크롤 보정 */
+  scroll-padding-top: 80px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--jn-bg);
+  color: var(--jn-paper);
+  font-family: var(--jn-font), var(--jn-font-fallback);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100%;
+  overflow-x: hidden;
+  line-height: 1.5;
+  /* 한글은 어절(공백) 단위로만 줄바꿈 — "아닙/니다" 같은 단어 중간 개행 방지 */
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+ul {
+  /* 기본값(outside) 유지 — 줄바꿈 시 글머리 기호 아래로 텍스트가 걸리는 hanging indent */
+  list-style-position: outside;
+}
+
+::selection {
+  background: var(--jn-sky);
+  color: var(--jn-ink);
+}
+
+summary {
+  list-style: none;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--jn-sky);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── 애니메이션 ────────────────────────────────────────────── */
+@keyframes jnDrift {
+  from {
+    transform: scale(1.06) translate(0, 0);
+  }
+  to {
+    transform: scale(1.12) translate(-1.5%, -2%);
+  }
+}
+@keyframes jnTwinkle {
+  0%,
+  100% {
+    opacity: 0.32;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes jnFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes jnPop {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── 인터랙션 유틸리티 ─────────────────────────────────────────
+   인라인 스타일은 클래스보다 우선순위가 높으므로, hover로 바뀌는
+   속성(color/background/transform/border-color)은 인라인이 아니라
+   여기 클래스에서만 정의합니다. ───────────────────────────────── */
+
+.nav-link {
+  color: rgba(240, 242, 246, 0.8);
+  transition: color 0.15s ease;
+}
+.nav-link:hover {
+  color: var(--jn-sky);
+}
+.nav-link[data-active='true'] {
+  color: var(--jn-sky);
+}
+
+.footer-link {
+  transition: color 0.15s ease;
+}
+.footer-link:hover {
+  color: var(--jn-sky);
+}
+
+/* 시그니처 sky 버튼 */
+.btn-primary {
+  background: var(--jn-sky);
+  color: var(--jn-ink);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.btn-primary:hover {
+  background: var(--jn-sky-soft);
+  transform: translateY(-2px);
+}
+
+/* 고스트(테두리) 버튼 */
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--jn-paper);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  transition: background 0.15s ease;
+}
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.13);
+}
+
+/* 떠오르는 카드 링크 */
+.card-link {
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+.card-link:hover {
+  transform: translateY(-6px);
+  border-color: rgba(134, 195, 250, 0.5);
+}
+
+/* ── 모바일 고정 CTA (≤759px에서만 노출, JS 불필요) ────────── */
+.mobile-cta {
+  display: none;
+}
+@media (max-width: 759px) {
+  .mobile-cta {
+    display: flex;
+  }
+  /* 고정 CTA에 콘텐츠가 가리지 않도록 바닥 여백 */
+  body {
+    padding-bottom: 76px;
+  }
+}
