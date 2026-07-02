@@ -11,7 +11,7 @@ export type JnEvent = {
   press?: string; // 보도자료 등 외부 링크
 };
 
-/** 노출 순서: 바닐라쩜넷 → 리얼톤 → 그 외 */
+/** 노출 순서: 최신순(시간 역순). 바닐라쩜넷은 매달 진행 중이라 가장 앞. */
 export const EVENTS: JnEvent[] = [
   {
     slug: 'vanilla',
@@ -20,6 +20,14 @@ export const EVENTS: JnEvent[] = [
     concept: '동아리원들이 한자리에 모이는 네트워킹 행사. 지금은 20+ 동아리 네트워크로 확장 중이에요.',
     photo: '/images/vanilla.jpg',
     color: '#FFBABA',
+  },
+  {
+    slug: 'it-arena',
+    name: 'IT Arena',
+    date: '2025.10',
+    concept: '로봇·AI·게임·알고리즘 등 6개 IT 분야를 아우르는 IT 페스티벌. 6개 과학기술원이 함께했어요.',
+    photo: '/images/it-arena.jpg',
+    color: '#86C3FA',
   },
   {
     slug: 'realton',
@@ -31,12 +39,12 @@ export const EVENTS: JnEvent[] = [
     press: SITE.links.realtonPress,
   },
   {
-    slug: 'it-arena',
-    name: 'IT Arena',
-    date: '2025.10',
-    concept: '로봇·AI·게임·알고리즘 등 6개 IT 분야를 아우르는 IT 페스티벌. 6개 과학기술원이 함께했어요.',
-    photo: '/images/it-arena.jpg',
-    color: '#86C3FA',
+    slug: 'uni-verse',
+    name: 'uni-verse.net',
+    date: '2025.6',
+    concept: '내 아이디어를 무한히 확장시키는 아이디어톤이에요.',
+    photo: '/images/uni-verse.jpg',
+    color: '#FADF4B',
   },
   {
     slug: 'port-forwarding',
@@ -45,13 +53,5 @@ export const EVENTS: JnEvent[] = [
     concept: '대학생들이 직접 강의자가 되는, 강의 중심의 네트워킹 세션이에요.',
     photo: '/images/port-forwarding.jpg',
     color: '#a594f7',
-  },
-  {
-    slug: 'uni-verse',
-    name: 'uni-verse.net',
-    date: '2025.6',
-    concept: '내 아이디어를 무한히 확장시키는 아이디어톤이에요.',
-    photo: '/images/uni-verse.jpg',
-    color: '#FADF4B',
   },
 ];

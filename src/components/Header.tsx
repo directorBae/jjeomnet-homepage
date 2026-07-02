@@ -9,15 +9,13 @@ export default function Header() {
 
   return (
     <header
+      className="site-header"
       style={{
         position: 'sticky',
         top: 0,
         zIndex: 50,
-        display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between',
         gap: 18,
-        flexWrap: 'wrap',
         padding: '15px clamp(20px,5vw,56px)',
         background: 'rgba(8,9,13,.74)',
         backdropFilter: 'blur(16px)',
@@ -25,7 +23,7 @@ export default function Header() {
         borderBottom: '1px solid rgba(255,255,255,.08)',
       }}
     >
-      <Link href="/" aria-label="쩜넷 홈" style={{ display: 'flex', alignItems: 'center' }}>
+      <Link href="/" aria-label="쩜넷 홈" className="site-logo" style={{ display: 'flex', alignItems: 'center' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/images/jjeomnet-text-white.svg"
@@ -38,6 +36,7 @@ export default function Header() {
 
       <nav
         aria-label="주요 메뉴"
+        className="site-nav"
         style={{
           display: 'flex',
           gap: 'clamp(16px,2.6vw,34px)',
@@ -66,7 +65,7 @@ export default function Header() {
         href={SITE.links.luma}
         target="_blank"
         rel="noopener noreferrer"
-        className="btn-primary"
+        className="btn-primary site-cta"
         style={{
           fontWeight: 700,
           fontSize: 14.5,

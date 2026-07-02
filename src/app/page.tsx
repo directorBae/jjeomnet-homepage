@@ -8,11 +8,11 @@ import { SITE_URL } from '@/lib/site';
 export const metadata: Metadata = {
   title: '쩜넷 — 하나의 점이, 우주가 될 때까지',
   description:
-    '좋아하는 사람들과 만들고, 혼자라면 만들지 못했을 것을 세상에 내보내는 곳. 꿈을 향해 달려가는 모든 청년들을 위한 커뮤니티, 쩜넷을 소개합니다.',
+    '좋아하는 사람들과 함께, 혼자라면 만들지 못했을 것을 세상에 내보내는 곳. 꿈을 향해 달려가는 모든 청년들을 위한 커뮤니티, 쩜넷을 소개합니다.',
   alternates: { canonical: '/' },
   openGraph: {
     title: '쩜넷 — 하나의 점이, 우주가 될 때까지',
-    description: '좋아하는 사람들과 만들고, 세상에 내보내는 곳. 꿈을 향해 달려가는 모든 청년들을 위한 커뮤니티, 쩜넷.',
+    description: '좋아하는 사람들과 함께, 세상에 내보내는 곳. 꿈을 향해 달려가는 모든 청년들을 위한 커뮤니티, 쩜넷.',
     url: '/',
   },
 };
@@ -24,13 +24,13 @@ const tracks = [
     href: '/community',
     n: '01',
     title: '커뮤니티',
-    desc: '다 같이 만들고, 진짜로 배포해요. 모든 게 여기서 시작돼요.',
+    desc: '모든 시작과 도전을 이곳에서. 다 같이 만들고, 배포해요.',
   },
   {
     href: '/events',
     n: '02',
     title: '행사',
-    desc: '흩어진 사람들이 한자리에. 무대에 서고, 서로 연결돼요.',
+    desc: '흩어진 사람들이 한자리에. 무대에 서고, 서로 연결하여 시너지를 만듭니다.',
   },
   // TODO: 콘텐츠(특이쩜) 카드 — /media 페이지 완성 후 다시 노출
 ];
@@ -143,7 +143,7 @@ export default function HomePage() {
               fontWeight: 500,
             }}
           >
-            좋아하는 사람들과 만들고, 혼자라면 만들지 못했을 것을
+            좋아하는 사람들과 함께, 혼자라면 만들지 못했을 것을
             <br />
             세상에 내보내는 곳. 쩜넷을 소개합니다.
           </p>
@@ -163,9 +163,9 @@ export default function HomePage() {
               letterSpacing: '-.035em',
             }}
           >
-            강의 들으러 온 거,
+            강의 들으러 온 거
             <br />
-            아니잖아요.
+            <span style={{ color: '#86C3FA' }}>아니잖아요.</span>
           </h2>
           <p
             style={{
@@ -177,7 +177,9 @@ export default function HomePage() {
               fontWeight: 500,
             }}
           >
-            정해진 커리큘럼을 따라가는 곳이 아니에요. 좋아하는 걸 직접 만들어서, 세상에 내보내는 곳이죠.
+            정해진 커리큘럼을 따라가는 곳이 아니에요.
+            <br />
+            좋아하는 걸 직접 만들어서, 세상에 내보내는 곳이죠.
           </p>
           <div
             style={{
@@ -210,7 +212,9 @@ export default function HomePage() {
                 NOT
               </div>
               <p style={{ margin: 0, fontSize: 21, lineHeight: 1.5, fontWeight: 500, color: 'rgba(240,242,246,.62)' }}>
-                강의도, 스터디도 아닙니다. 정해진 커리큘럼을 따라가는 곳이 아닙니다.
+                쩜넷은 강의도, 스터디도 아닙니다.
+                <br />
+                정해진 커리큘럼을 따라가는 곳이 아닙니다.
               </p>
             </div>
             <div
@@ -237,7 +241,7 @@ export default function HomePage() {
                 BUT
               </div>
               <p style={{ margin: 0, fontSize: 21, lineHeight: 1.5, fontWeight: 600, color: '#F0F2F6' }}>
-                함께 만들고, 배포하고, 보여주고, 제안하고, 실험하는 커뮤니티입니다.
+                함께 만들고, 배포하고, 제안하고, 실험하는 커뮤니티입니다.
               </p>
             </div>
           </div>
@@ -268,7 +272,7 @@ export default function HomePage() {
               lineHeight: 1.12,
             }}
           >
-            좋아하는 사람들과,
+            좋아하는 사람들과
             <br />
             이렇게 시간을 써요.
           </h2>
@@ -315,9 +319,9 @@ export default function HomePage() {
               lineHeight: 1.12,
             }}
           >
-            쩜넷을 중심으로
+            쩜넷은 많은 이들의
             <br />
-            대학생은 모였습니다.
+            도전을 함께하고 있습니다.
           </h2>
 
           {/* 통계 */}
@@ -365,7 +369,7 @@ export default function HomePage() {
               lineHeight: 1.12,
             }}
           >
-            이런 행사들을,
+            이런 행사들을
             <br />
             직접 열어왔어요.
           </h3>

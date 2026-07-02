@@ -55,10 +55,11 @@ const storyRows = [
 ];
 
 const mentors = [
-  { tag: 'A', items: ['스타트업 커리어로 0원→연 8천만원', '네이버·당근·레브잇 오퍼', '시리즈 A 스타트업 거쳐 직접 창업', '해커톤·창업대회 장관상 다수'] },
-  { tag: 'B', items: ['한예종 디자인 → UIUC 경영 석사', '에이전시 인턴 → 삼성 인하우스 컨설팅 RA', '브랜드·서비스 기획 경험', '수많은 이력서·포트폴리오 첨삭'] },
+  { tag: 'A', age: '23세', items: ['스타트업 커리어로 0원→연 8천만원', '네이버·당근·레브잇 오퍼', '시리즈 A 스타트업 거쳐 직접 창업', '해커톤·창업대회 장관상 다수'] },
+  { tag: 'B', age: '24세', items: ['한예종 디자인 → UIUC 경영 석사', '에이전시 인턴 → 삼성 인하우스 컨설팅 RA', '브랜드·서비스 기획 경험', '수많은 이력서·포트폴리오 첨삭'] },
   {
     tag: 'C',
+    age: '25세',
     items: [
       '강화학습 + Transformer 기반의 World Model 연구',
       '대학교 3학년 나이에 랩장을 거쳐 World Model 핵심 성과',
@@ -66,9 +67,10 @@ const mentors = [
       '오랜 연구 경험에서 길어 올린 깊이',
     ],
   },
-  { tag: 'D', items: ['과학고를 거쳐 → 과학기술원까지', '1티어 학회 논문 게재', '뛰어난 연구 성과와 Publication 경험'] },
+  { tag: 'D', age: '23세', items: ['과학고를 거쳐 → 과학기술원까지', '1티어 학회 논문 게재', '뛰어난 연구 성과와 Publication 경험'] },
   {
     tag: 'E',
+    age: '22세',
     items: [
       '대학교 1학년 때부터 연구 리드',
       '다년간의 스타트업 경험',
@@ -283,8 +285,7 @@ export default function CommunityPage() {
             서로 다른 길을 걸어온 사람들.
           </h2>
           <p style={{ margin: '0 0 46px', maxWidth: 640, fontSize: 16.5, lineHeight: 1.6, color: 'rgba(240,242,246,.64)', fontWeight: 500 }}>
-            각기 다른 커리어를 직접 걸어왔기에, 당신의 경험을 ‘스토리’로 엮는 법을 누구보다 잘 압니다. (개인정보 보호를 위해 익명으로
-            소개합니다.)
+            각기 다른 커리어를 직접 걸어왔기에, 당신의 경험을 ‘스토리’로 엮는 법을 누구보다 잘 압니다. 모두 20대 멘토들입니다. 멘토들도 도전하고, 나아가고 있으며 세상과 닿는 법을 조금 일찍 알게 된 청춘들입니다.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,230px),1fr))', gap: 16 }}>
             {mentors.map((m) => (
@@ -305,6 +306,9 @@ export default function CommunityPage() {
                   }}
                 >
                   {m.tag}
+                </div>
+                <div style={{ fontSize: 12.5, fontWeight: 600, color: 'rgba(240,242,246,.45)', marginTop: -6, marginBottom: 14 }}>
+                  {m.age}
                 </div>
                 <ul style={{ margin: 0, paddingLeft: 18, fontSize: 14, lineHeight: 1.7, color: 'rgba(240,242,246,.66)', fontWeight: 500 }}>
                   {m.items.map((it) => (

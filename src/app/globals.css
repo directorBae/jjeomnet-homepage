@@ -188,6 +188,34 @@ summary::-webkit-details-marker {
   border-color: rgba(134, 195, 250, 0.5);
 }
 
+/* ── 헤더: 데스크톱은 3열 그리드로 내비를 페이지 정중앙에 고정 ── */
+.site-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+}
+.site-header .site-logo {
+  justify-self: start;
+}
+.site-header .site-nav {
+  justify-self: center;
+}
+.site-header .site-cta {
+  justify-self: end;
+}
+/* 좁은 화면: 로고+CTA 한 줄, 내비는 아래 줄 가운데 */
+@media (max-width: 560px) {
+  .site-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .site-header .site-nav {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* ── 모바일 고정 CTA (≤759px에서만 노출, JS 불필요) ────────── */
 .mobile-cta {
   display: none;
