@@ -54,6 +54,33 @@ const storyRows = [
   },
 ];
 
+const activities = [
+  {
+    cadence: '월 1회',
+    title: '오프라인 정기 세션',
+    desc: '매달 한 번, 한자리에 모여 진행 상황을 공유하고 서로의 프로젝트에 피드백을 주고받아요.',
+    color: '#86C3FA',
+  },
+  {
+    cadence: '매달',
+    title: '바닐라쩜넷',
+    desc: '데모데이 형태의 네트워킹 행사. 만든 걸 무대에서 선보이고, 새 팀원도 이곳에서 모아요.',
+    color: '#FFBABA',
+  },
+  {
+    cadence: '월 1~2회',
+    title: '멘토 세션',
+    desc: '트랙별 멘토와 함께하는 멘토링·커리어 세션. 프로젝트를 ‘스펙’으로 설계하는 시간이에요.',
+    color: '#5EF479',
+  },
+  {
+    cadence: '상시',
+    title: '온라인 디스코드',
+    desc: '언제든 질문하고, 자랑하고, 함께 배포하는 상시 소통·협업 채널이에요.',
+    color: '#FADF4B',
+  },
+];
+
 const mentors = [
   { tag: 'A', age: '23세', items: ['스타트업 커리어로 0원→연 8천만원', '네이버·당근·레브잇 오퍼', '시리즈 A 스타트업 거쳐 직접 창업', '해커톤·창업대회 장관상 다수'] },
   { tag: 'B', age: '24세', items: ['한예종 디자인 → UIUC 경영 석사', '에이전시 인턴 → 삼성 인하우스 컨설팅 RA', '브랜드·서비스 기획 경험', '수많은 이력서·포트폴리오 첨삭'] },
@@ -272,6 +299,45 @@ export default function CommunityPage() {
             <p style={{ margin: '30px 0 0', fontSize: 'clamp(16px,1.9vw,20px)', fontWeight: 700, lineHeight: 1.5, paddingTop: 26, borderTop: '1px solid rgba(255,255,255,.1)' }}>
               그냥 취미 프로젝트가, <span style={{ color: '#86C3FA' }}>설명할 수 있는 데이터 분석 커리어</span>가 됐어요.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ACT 2.5 · 정기 활동 */}
+      <section style={{ padding: 'clamp(74px,9vw,128px) clamp(20px,5vw,56px)', background: '#07080c' }}>
+        <div style={{ maxWidth: 1180, margin: '0 auto' }}>
+          <h2 style={{ margin: '0 0 18px', fontSize: 'clamp(28px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-.03em', lineHeight: 1.16 }}>
+            들어오면, 매달
+            <br />
+            이런 걸 함께해요.
+          </h2>
+          <p style={{ margin: '0 0 46px', maxWidth: 640, fontSize: 16.5, lineHeight: 1.6, color: 'rgba(240,242,246,.64)', fontWeight: 500 }}>
+            온라인과 오프라인을 오가며, 꾸준히 모이고 만들고 연결돼요. 아래 활동들이 매달 반복됩니다.
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,240px),1fr))', gap: 16 }}>
+            {activities.map((a) => (
+              <div key={a.title} style={{ background: '#11131d', border: '1px solid rgba(255,255,255,.07)', borderRadius: 18, padding: 28 }}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    fontSize: 12.5,
+                    fontWeight: 700,
+                    color: a.color,
+                    background: 'rgba(255,255,255,.05)',
+                    border: `1px solid ${a.color}44`,
+                    padding: '5px 11px',
+                    borderRadius: 999,
+                    marginBottom: 18,
+                  }}
+                >
+                  {a.cadence}
+                </span>
+                <div style={{ fontSize: 19, fontWeight: 800, letterSpacing: '-.02em', marginBottom: 12 }}>{a.title}</div>
+                <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.6, color: 'rgba(240,242,246,.64)', fontWeight: 500 }}>
+                  {a.desc}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
