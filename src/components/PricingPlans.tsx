@@ -38,7 +38,7 @@ const PLANS: Plan[] = [
   {
     key: 'growth',
     name: 'Growth',
-    price: '₩39,000',
+    price: '₩39,900',
     period: '/월',
     icon: '/images/icon-growth.svg',
     tagline: '수익·창업·커리어로 성장. (Spark 포함)',
