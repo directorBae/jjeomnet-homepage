@@ -473,7 +473,9 @@ export default function HomePage() {
             사람들이 모여 있는 곳<span style={{ color: '#86C3FA' }}>.</span>
           </h2>
           <p style={{ margin: 0, fontSize: 17, color: 'rgba(240,242,246,.7)', fontWeight: 500 }}>
-            상시 모집합니다. 한 걸음에 신청하고, 오픈채팅으로 들어오세요.
+            상시 모집합니다. 디스코드에 들어오면 무료 트랙이 바로 제공되고,
+            <br />
+            Spark · Growth 프로젝트 트랙 안내도 그 안에서 이루어져요.
           </p>
           <CtaButtons />
         </div>

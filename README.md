@@ -132,7 +132,7 @@ jjeomnet/
   `Photo` 컴포넌트로 교체하세요.
 - **콘텐츠 페이지 CTA 링크**: ‘특이쩜 보러 가기’·‘구독하기’는 아직 `#` 자리표시자입니다.
   유튜브/채널 URL이 정해지면 `src/app/media/page.tsx`에서 교체하세요.
-- **외부 링크**: 커뮤니티 신청(luma)·오픈채팅(kakao) URL은 `src/lib/site.ts`에서 일괄 관리합니다.
+- **외부 링크**: 디스코드 초대(discord) URL은 `src/lib/site.ts`에서 일괄 관리합니다.
 
 ---
 

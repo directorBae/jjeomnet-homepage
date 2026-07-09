@@ -3,12 +3,12 @@ import { CtaButtons } from "@/components/Cta";
 import JsonLd from "@/components/JsonLd";
 import PricingPlans from "@/components/PricingPlans";
 import Faq from "@/components/Faq";
-import { SITE_URL } from "@/lib/site";
+import { SITE, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "커뮤니티",
   description:
-    "스펙이 아니라 스토리. 하고 싶은 사이드 프로젝트를 진짜로 함께 만들고, 멘토가 그것을 커리어 스토리(스펙)로 설계합니다. 커뮤니티 가입은 무료, Spark·Growth 요금제로 배포·도메인·멘토링까지.",
+    "스펙이 아니라 스토리. 하고 싶은 사이드 프로젝트를 진짜로 함께 만들고, 멘토가 그것을 커리어 스토리(스펙)로 설계합니다. 디스코드 입장 시 무료 트랙 제공, Spark·Growth 프로젝트 트랙으로 배포·도메인·멘토링까지.",
   alternates: { canonical: "/community" },
   openGraph: {
     title: "커뮤니티 · 쩜넷",
@@ -145,7 +145,7 @@ const mentors = [
 const faqs = [
   {
     q: "커뮤니티 가입은 무료인가요?",
-    a: "네. 커뮤니티 가입은 무료예요. Free 요금제에서 온라인 디스코드 참여 등 기본 활동을 할 수 있습니다.",
+    a: "네. 디스코드에 입장하는 것만으로 무료 트랙이 바로 제공돼요. Spark·Growth 프로젝트 트랙 안내와 신청도 디스코드에서 이루어집니다.",
   },
   {
     q: "혼자 참여해도 되나요?",
@@ -875,20 +875,142 @@ export default function CommunityPage() {
             시작합니다.
           </p>
           <CtaButtons fontSize={16.5} />
-          <iframe
-            src="https://luma.com/embed/event/evt-ftUUYkdYRVQG95k/simple"
-            title="바닐라쩜넷 이벤트 신청"
+
+          {/* 디스코드 합류 안내 */}
+          <div
             style={{
               width: "100%",
               maxWidth: 760,
-              height: 400,
-              border: "1px solid #bfcbda88",
-              borderRadius: 8,
+              textAlign: "left",
+              background:
+                "linear-gradient(160deg,rgba(88,101,242,.16),#11131d)",
+              border: "1px solid rgba(88,101,242,.42)",
+              borderRadius: 20,
+              padding: "clamp(26px,4vw,40px)",
+              display: "flex",
+              flexDirection: "column",
+              gap: 22,
             }}
-            allow="fullscreen; payment"
-            aria-hidden="false"
-            tabIndex={0}
-          />
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+                flexWrap: "wrap",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 12.5,
+                  fontWeight: 800,
+                  letterSpacing: ".08em",
+                  color: "#fff",
+                  background: "#5865F2",
+                  padding: "6px 13px",
+                  borderRadius: 8,
+                }}
+              >
+                DISCORD
+              </span>
+              <span
+                style={{
+                  fontSize: "clamp(17px,2vw,21px)",
+                  fontWeight: 800,
+                  letterSpacing: "-.02em",
+                }}
+              >
+                쩜넷의 모든 시작은 디스코드에서.
+              </span>
+            </div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns:
+                  "repeat(auto-fit,minmax(min(100%,280px),1fr))",
+                gap: 14,
+              }}
+            >
+              <div
+                style={{
+                  background: "rgba(7,8,12,.55)",
+                  border: "1px solid rgba(255,255,255,.08)",
+                  borderRadius: 14,
+                  padding: "18px 20px",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 800,
+                    color: "#86C3FA",
+                    marginBottom: 8,
+                  }}
+                >
+                  입장 즉시 무료 트랙
+                </div>
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: 14.5,
+                    lineHeight: 1.6,
+                    color: "rgba(240,242,246,.72)",
+                    fontWeight: 500,
+                  }}
+                >
+                  초대 링크로 들어오는 순간 무료 트랙이 제공돼요. 온라인
+                  커뮤니티 활동을 비용 없이 바로 시작할 수 있어요.
+                </p>
+              </div>
+              <div
+                style={{
+                  background: "rgba(7,8,12,.55)",
+                  border: "1px solid rgba(255,255,255,.08)",
+                  borderRadius: 14,
+                  padding: "18px 20px",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 800,
+                    color: "#86C3FA",
+                    marginBottom: 8,
+                  }}
+                >
+                  프로젝트 트랙 안내
+                </div>
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: 14.5,
+                    lineHeight: 1.6,
+                    color: "rgba(240,242,246,.72)",
+                    fontWeight: 500,
+                  }}
+                >
+                  Spark · Growth 프로젝트 트랙의 안내와 신청도 모두 디스코드
+                  안에서 이루어져요. 배포·도메인·멘토링까지 여기서 연결됩니다.
+                </p>
+              </div>
+            </div>
+            <a
+              href={SITE.links.discord}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+              style={{
+                display: "block",
+                textAlign: "center",
+                fontWeight: 700,
+                fontSize: 16,
+                padding: "15px 20px",
+                borderRadius: 12,
+              }}
+            >
+              디스코드 초대 받기 →
+            </a>
+          </div>
         </div>
       </section>
     </>

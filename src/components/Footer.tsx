@@ -79,20 +79,12 @@ export default function Footer() {
             <div style={colTitle}>합류·협업</div>
             <div style={colList}>
               <a
-                href={SITE.links.luma}
+                href={SITE.links.discord}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-link"
               >
-                커뮤니티 신청 (luma)
-              </a>
-              <a
-                href={SITE.links.kakao}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-link"
-              >
-                오픈채팅 입장
+                디스코드 합류 (무료)
               </a>
               <PartnerContact className="footer-link">파트너·협업 문의</PartnerContact>
             </div>

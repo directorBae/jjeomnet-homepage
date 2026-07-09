@@ -20,11 +20,11 @@ export default function MobileCTA() {
       }}
     >
       <a
-        href={SITE.links.luma}
+        href={SITE.links.discord}
         target="_blank"
         rel="noopener noreferrer"
         style={{
-          flex: 2,
+          flex: 1,
           textAlign: 'center',
           background: 'var(--jn-sky)',
           color: 'var(--jn-ink)',
@@ -34,24 +34,7 @@ export default function MobileCTA() {
           borderRadius: 12,
         }}
       >
-        커뮤니티 신청 →
-      </a>
-      <a
-        href={SITE.links.kakao}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          flex: 1,
-          textAlign: 'center',
-          border: '1px solid rgba(255,255,255,.24)',
-          color: '#F0F2F6',
-          fontWeight: 600,
-          fontSize: 15.5,
-          padding: 14,
-          borderRadius: 12,
-        }}
-      >
-        오픈채팅
+        디스코드 참여 →
       </a>
     </div>
   );

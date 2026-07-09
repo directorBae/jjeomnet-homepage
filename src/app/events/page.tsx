@@ -152,7 +152,7 @@ export default function EventsPage() {
             다음 행사에서, 만나요<span style={{ color: '#86C3FA' }}>.</span>
           </h2>
           <p style={{ margin: 0, fontSize: 16.5, color: 'rgba(240,242,246,.7)', fontWeight: 500 }}>
-            오픈채팅방에 다음 행사 공지가 올라옵니다. 커뮤니티로 들어오세요.
+            디스코드에 다음 행사 공지가 올라옵니다. 커뮤니티로 들어오세요.
           </p>
           <CtaButtons fontSize={16.5} />
         </div>

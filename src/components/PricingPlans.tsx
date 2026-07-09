@@ -59,7 +59,7 @@ const PLANS: Plan[] = [
 const POLICIES = [
   'Spark ↔ Growth 자유롭게 업그레이드 · 다운그레이드',
   '프로젝트가 진행되는 기간 동안 자유롭게 납부',
-  '커뮤니티 가입은 무료 — Free 요금제에서 온라인 디스코드 참여 등 기본 활동 가능',
+  '디스코드 입장은 무료 — 들어오는 즉시 무료 트랙 제공, Spark·Growth 트랙 안내·신청도 디스코드에서 진행',
 ];
 
 function Check() {
@@ -118,9 +118,9 @@ export default function PricingPlans() {
         >
           FREE
         </span>
-        <span style={{ fontSize: 'clamp(15px,1.7vw,18px)', fontWeight: 700 }}>커뮤니티 가입은 무료예요.</span>
+        <span style={{ fontSize: 'clamp(15px,1.7vw,18px)', fontWeight: 700 }}>디스코드에 들어오면 무료 트랙이 바로 제공돼요.</span>
         <span style={{ fontSize: 14.5, color: 'rgba(240,242,246,.62)', fontWeight: 500 }}>
-          온라인 디스코드 참여 등 기본 활동은 Free로 시작할 수 있어요.
+          Spark·Growth 프로젝트 트랙 안내와 신청도 디스코드 안에서 이루어져요.
         </span>
       </div>
 
@@ -210,7 +210,7 @@ export default function PricingPlans() {
             </div>
 
             <a
-              href={SITE.links.luma}
+              href={SITE.links.discord}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -224,7 +224,7 @@ export default function PricingPlans() {
                 borderRadius: 12,
               }}
             >
-              커뮤니티 신청하기 →
+              디스코드에서 신청하기 →
             </a>
           </div>
         )}

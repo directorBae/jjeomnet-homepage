@@ -21,14 +21,12 @@ export const SITE = {
   locale: 'ko_KR',
   /** 외부 채널 */
   links: {
-    luma: 'https://luma.com/5ge0nky4',
-    kakao: 'https://open.kakao.com/o/gMfrrxxi',
+    discord: 'https://discord.gg/xsquhAuBH',
     realtonPress: 'https://www.ksilbo.co.kr/news/articleView.html?idxno=1034784',
   },
   /** JSON-LD sameAs 등에 노출할 공식 채널 (추후 채널 추가 시 여기에) */
   sameAs: [
-    'https://luma.com/5ge0nky4',
-    'https://open.kakao.com/o/gMfrrxxi',
+    'https://discord.gg/xsquhAuBH',
   ],
   keywords: [
     '쩜넷',

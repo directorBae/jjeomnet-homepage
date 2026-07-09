@@ -62,7 +62,7 @@ export default function Header() {
       </nav>
 
       <a
-        href={SITE.links.luma}
+        href={SITE.links.discord}
         target="_blank"
         rel="noopener noreferrer"
         className="btn-primary site-cta"
@@ -73,7 +73,7 @@ export default function Header() {
           borderRadius: 999,
         }}
       >
-        신청하기
+        디스코드 참여
       </a>
     </header>
   );
