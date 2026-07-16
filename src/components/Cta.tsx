@@ -21,9 +21,9 @@ export function PrimaryLink({ href, children, external = true, fontSize = 16, pa
   );
 }
 
-/** 디스코드 합류 단일 버튼 (사이트 곳곳의 표준 CTA) */
+/** 프로젝트 트랙 신청 단일 버튼 (사이트 곳곳의 표준 CTA) */
 export function CtaButtons({
-  primaryLabel = '디스코드로 합류하기 →',
+  primaryLabel = '프로젝트 트랙 신청하기 →',
   fontSize = 16,
   justify = 'center',
 }: {
@@ -33,7 +33,7 @@ export function CtaButtons({
 }) {
   return (
     <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: justify }}>
-      <PrimaryLink href={SITE.links.discord} fontSize={fontSize} padding="17px 30px">
+      <PrimaryLink href={SITE.links.projectTrack} fontSize={fontSize} padding="17px 30px">
         {primaryLabel}
       </PrimaryLink>
     </div>

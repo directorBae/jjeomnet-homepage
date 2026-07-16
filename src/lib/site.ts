@@ -22,6 +22,7 @@ export const SITE = {
   /** 외부 채널 */
   links: {
     discord: 'https://discord.gg/xsquhAuBH',
+    projectTrack: 'https://forms.gle/wRcKjHb1WLZTvrR68',
     realtonPress: 'https://www.ksilbo.co.kr/news/articleView.html?idxno=1034784',
   },
   /** JSON-LD sameAs 등에 노출할 공식 채널 (추후 채널 추가 시 여기에) */

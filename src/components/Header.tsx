@@ -62,7 +62,7 @@ export default function Header() {
       </nav>
 
       <a
-        href={SITE.links.discord}
+        href={SITE.links.projectTrack}
         target="_blank"
         rel="noopener noreferrer"
         className="btn-primary site-cta"
@@ -73,7 +73,7 @@ export default function Header() {
           borderRadius: 999,
         }}
       >
-        디스코드 참여
+        프로젝트 트랙 신청
       </a>
     </header>
   );

@@ -20,7 +20,7 @@ export default function MobileCTA() {
       }}
     >
       <a
-        href={SITE.links.discord}
+        href={SITE.links.projectTrack}
         target="_blank"
         rel="noopener noreferrer"
         style={{
@@ -34,7 +34,7 @@ export default function MobileCTA() {
           borderRadius: 12,
         }}
       >
-        디스코드 참여 →
+        프로젝트 트랙 신청 →
       </a>
     </div>
   );

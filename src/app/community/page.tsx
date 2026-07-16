@@ -995,7 +995,7 @@ export default function CommunityPage() {
               </div>
             </div>
             <a
-              href={SITE.links.discord}
+              href={SITE.links.projectTrack}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -1008,7 +1008,7 @@ export default function CommunityPage() {
                 borderRadius: 12,
               }}
             >
-              디스코드 초대 받기 →
+              프로젝트 트랙 신청하기 →
             </a>
           </div>
         </div>

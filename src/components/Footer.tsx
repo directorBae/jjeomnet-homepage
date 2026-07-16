@@ -79,12 +79,12 @@ export default function Footer() {
             <div style={colTitle}>합류·협업</div>
             <div style={colList}>
               <a
-                href={SITE.links.discord}
+                href={SITE.links.projectTrack}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-link"
               >
-                디스코드 합류 (무료)
+                프로젝트 트랙 신청하기
               </a>
               <PartnerContact className="footer-link">파트너·협업 문의</PartnerContact>
             </div>

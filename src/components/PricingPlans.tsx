@@ -210,7 +210,7 @@ export default function PricingPlans() {
             </div>
 
             <a
-              href={SITE.links.discord}
+              href={SITE.links.projectTrack}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -224,7 +224,7 @@ export default function PricingPlans() {
                 borderRadius: 12,
               }}
             >
-              디스코드에서 신청하기 →
+              프로젝트 트랙 신청하기 →
             </a>
           </div>
         )}
