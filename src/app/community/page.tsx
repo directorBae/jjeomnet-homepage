@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { CtaButtons } from "@/components/Cta";
 import JsonLd from "@/components/JsonLd";
 import PricingPlans from "@/components/PricingPlans";
@@ -527,6 +528,24 @@ export default function CommunityPage() {
               가 됐어요.
             </p>
           </div>
+
+          {/* 진행 과정 상세 페이지 진입점 */}
+          <div
+            style={{ marginTop: 28, display: "flex", justifyContent: "center" }}
+          >
+            <Link
+              href="/community/program"
+              className="btn-ghost"
+              style={{
+                fontWeight: 700,
+                fontSize: 15.5,
+                padding: "15px 28px",
+                borderRadius: 999,
+              }}
+            >
+              가입하면 어떻게 진행되나요? — 더 자세히 알아보기 →
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -756,6 +775,7 @@ export default function CommunityPage() {
 
       {/* ACT 4 · 가격 */}
       <section
+        id="pricing"
         style={{
           padding: "clamp(74px,9vw,128px) clamp(20px,5vw,56px)",
           background: "#0b0d15",
@@ -874,7 +894,11 @@ export default function CommunityPage() {
             상시 모집해요. 온라인 + 바닐라쩜넷 오프라인 병행, 들어온 팀부터 바로
             시작합니다.
           </p>
-          <CtaButtons fontSize={16.5} />
+          <CtaButtons
+            fontSize={16.5}
+            secondaryHref="/community/program"
+            secondaryLabel="더 자세히 알아보기"
+          />
 
           {/* 디스코드 합류 안내 */}
           <div
