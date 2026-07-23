@@ -72,18 +72,43 @@ const moats = [
 ];
 
 /** 프로그램의 세 가지 축 — 멘토 · 동료 · 커리어 */
-const pillars = [
+const pillars: {
+  n: string;
+  color: string;
+  title: string;
+  desc: React.ReactNode;
+}[] = [
   {
     n: "01",
     color: "#86C3FA",
     title: "멘토가 이끌어줘요.",
-    desc: "동아리처럼 학생들끼리만 하다 보면 프로젝트는 금방 지지부진해져요. 쩜넷은 소수정예로 모여, 기획부터 완성까지 멘토가 직접 이끌어줍니다.",
+    desc: (
+      <>
+        동아리처럼 학생들끼리만 하다 보면 프로젝트는 금방 지지부진해져요. 또{" "}
+        <span style={{ color: "#F0F2F6", fontWeight: 800 }}>
+          차별성 있는 결과
+        </span>
+        를 기대하기 힘들죠.
+        <br />
+        쩜넷은 소수정예로 모여, 기획부터 완성까지 멘토가 직접 이끌어주고,{" "}
+        <span style={{ color: "#F0F2F6", fontWeight: 800 }}>
+          남들이 따라하기 힘든 스킬
+        </span>
+        을 만들어줘요.
+      </>
+    ),
   },
   {
     n: "02",
     color: "#5EF479",
     title: "동료들을 만나요.",
-    desc: "함께 프로젝트를 진행하는 동료들과 같이 나아가요. 월 1회, 프로젝트 성과를 공유하고 친분을 쌓는 세션도 열립니다.",
+    desc: (
+      <>
+        함께 프로젝트를 진행하는 동료들과 같이 나아가요.
+        <br />
+        월 1회, 프로젝트 성과를 공유하고 친분을 쌓는 세션도 열립니다.
+      </>
+    ),
   },
   {
     n: "03",
@@ -368,7 +393,11 @@ export default function CareerTrackPage() {
               fontWeight: 700,
             }}
           >
-            여러분의 커리어 빌딩을 위한 쩜넷의 커리어 트랙
+            여러분의 커리어 빌딩을 위한{" "}
+            <span style={{ color: "#86C3FA" }}>쩜넷</span>의 커리어 트랙
+            <span style={{ color: "#86C3FA", fontSize: "1.5em", fontWeight: 800, lineHeight: 0 }}>
+              .
+            </span>
           </p>
           <CtaButtons
             justify="flex-start"
@@ -715,7 +744,9 @@ export default function CareerTrackPage() {
                 }}
               >
                 졸업 프로젝트, 사이드 프로젝트의 결과물은 평범한 웹/앱
-                서비스예요. AI가 코드를 짜 주는 시대 —{" "}
+                서비스예요. AI가 코드를 짜 주는 시대
+                <br />
+                —{" "}
                 <span style={{ color: "#F0F2F6", fontWeight: 800 }}>
                   누구나 금방 따라 만들 수 있죠.
                 </span>
@@ -754,8 +785,9 @@ export default function CareerTrackPage() {
                   color: "#F0F2F6",
                 }}
               >
-                남들이 쉽게 따라올 수 없는 것들이 프로젝트 안에 쌓여 있어요 —{" "}
-                <span style={{ color: "#86C3FA" }}>바로 아래 세 가지죠. ↓</span>
+                남들이 쉽게 따라올 수 없는 것들이 프로젝트 안에 쌓여 있어요
+                <br />
+                — <span style={{ color: "#86C3FA" }}>바로 아래 세 가지죠. ↓</span>
               </p>
             </div>
           </div>

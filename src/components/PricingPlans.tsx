@@ -16,8 +16,6 @@ type Plan = {
   packagePrice: string;
   /** 할인 전 정가 — 연장가(월) × 기간 */
   originalPrice: string;
-  /** 월별 정가 표시 */
-  monthly: string;
   /** 기간 종료 후 월 단위 연장 요금 */
   extendMonthly: string;
   icon: string;
@@ -34,7 +32,6 @@ const PLANS: Plan[] = [
     duration: '3개월',
     packagePrice: '₩49,900',
     originalPrice: '₩89,700',
-    monthly: '월 ₩19,900',
     extendMonthly: '월 ₩29,900',
     icon: '/images/icon-spark.svg',
     tagline: '아이디어에 불을 붙여, 실제 배포까지.',
@@ -57,7 +54,6 @@ const PLANS: Plan[] = [
     duration: '6개월',
     packagePrice: '₩199,900',
     originalPrice: '₩419,400',
-    monthly: '월 ₩39,900',
     extendMonthly: '월 ₩69,900',
     icon: '/images/icon-growth.svg',
     tagline: '수익·시장 탐색·커리어로 성장. (Spark 포함)',
@@ -126,31 +122,30 @@ function Check() {
   );
 }
 
-/** 정가 → 할인가를 잇는 Z자 화살표 — 위 꺾임이 원가(취소선)에 겹치도록 위로 당겨 배치 */
-function ZigzagArrow() {
+/** 원가를 가로질러 지우고 새 가격을 가리키는 Z자 화살표 오버레이 */
+function PriceZigzag() {
   return (
     <svg
-      width="38"
-      height="34"
-      viewBox="0 0 38 34"
+      width="96"
+      height="62"
+      viewBox="0 0 96 62"
       fill="none"
       aria-hidden
-      style={{ display: 'block', flexShrink: 0, marginTop: -20 }}
+      style={{ position: 'absolute', left: -6, top: 0, pointerEvents: 'none' }}
     >
       <path
-        d="M3 4 H29 L9 26 H28"
+        d="M2 11 H82 L12 50 H38"
         stroke="#86C3FA"
         strokeWidth="2.6"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
-        d="M22 19 L30 26 L21 32"
+        d="M31 43 L40 50 L30 57"
         stroke="#86C3FA"
         strokeWidth="2.6"
         strokeLinecap="round"
         strokeLinejoin="round"
-        fill="none"
       />
     </svg>
   );
@@ -192,32 +187,35 @@ export default function PricingPlans() {
               <span style={{ fontSize: 15, color: 'rgba(240,242,246,.55)', fontWeight: 600 }}>완주 과정</span>
             </div>
             <div>
-              {/* 정가(위) → Z자 화살표 → 할인가(아래) */}
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
-                <span style={{ fontSize: 17, color: 'rgba(240,242,246,.45)', fontWeight: 700, textDecoration: 'line-through' }}>
-                  {p.originalPrice}
-                </span>
-                <span
-                  style={{
-                    fontSize: 12,
-                    fontWeight: 800,
-                    color: '#00041A',
-                    background: '#86C3FA',
-                    padding: '3px 9px',
-                    borderRadius: 999,
-                  }}
-                >
-                  {p.duration} 특가
-                </span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 8 }}>
-                <ZigzagArrow />
-                <span style={{ fontSize: 'clamp(30px,3.4vw,38px)', fontWeight: 800, color: '#86C3FA', letterSpacing: '-.02em', lineHeight: 1 }}>
-                  {p.packagePrice}
-                </span>
+              {/* 원가를 Z자 화살표가 가로질러 지우고, 아래의 새 가격으로 갱신 */}
+              <div style={{ position: 'relative' }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap' }}>
+                  <span style={{ fontSize: 17, color: 'rgba(240,242,246,.45)', fontWeight: 700 }}>
+                    {p.originalPrice}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 12,
+                      fontWeight: 800,
+                      color: '#00041A',
+                      background: '#86C3FA',
+                      padding: '3px 9px',
+                      borderRadius: 999,
+                    }}
+                  >
+                    {p.duration} 특가
+                  </span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginTop: 12, paddingLeft: 46 }}>
+                  <span style={{ fontSize: 'clamp(30px,3.4vw,38px)', fontWeight: 800, color: '#86C3FA', letterSpacing: '-.02em', lineHeight: 1 }}>
+                    {p.packagePrice}
+                  </span>
+                  <span style={{ fontSize: 15.5, fontWeight: 700, color: 'rgba(240,242,246,.55)' }}>/{p.duration}</span>
+                </div>
+                <PriceZigzag />
               </div>
               <div style={{ marginTop: 8, fontSize: 13.5, color: 'rgba(240,242,246,.55)', fontWeight: 500 }}>
-                {p.monthly} 기준 · 종료 후 연장 시 {p.extendMonthly}
+                {p.duration} 종료 후 연장 시 {p.extendMonthly}
               </div>
             </div>
             <p style={{ margin: 0, fontSize: 15, lineHeight: 1.55, color: 'rgba(240,242,246,.66)', fontWeight: 500 }}>{p.tagline}</p>
@@ -322,7 +320,7 @@ export default function PricingPlans() {
                   <span style={{ fontSize: 24, fontWeight: 800, color: '#86C3FA' }}>{active.packagePrice}</span>
                 </div>
                 <div style={{ fontSize: 13.5, color: 'rgba(240,242,246,.55)', fontWeight: 500, marginTop: 2 }}>
-                  {active.monthly} 기준 · 종료 후 연장 시 {active.extendMonthly}
+                  {active.duration} 종료 후 연장 시 {active.extendMonthly}
                 </div>
                 <div style={{ fontSize: 14.5, color: 'rgba(240,242,246,.66)', fontWeight: 500, marginTop: 2 }}>{active.tagline}</div>
                 <div style={{ fontSize: 13.5, color: '#86C3FA', fontWeight: 700, marginTop: 4 }}>— {active.recommend}</div>
