@@ -20,7 +20,7 @@ export default function MobileCTA() {
       }}
     >
       <a
-        href={SITE.links.projectTrack}
+        href={SITE.links.careerTrack}
         target="_blank"
         rel="noopener noreferrer"
         style={{
@@ -34,7 +34,7 @@ export default function MobileCTA() {
           borderRadius: 12,
         }}
       >
-        프로젝트 트랙 신청 →
+        커리어 트랙 신청 →
       </a>
     </div>
   );

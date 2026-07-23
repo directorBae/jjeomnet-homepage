@@ -22,7 +22,9 @@ export const SITE = {
   /** 외부 채널 */
   links: {
     discord: 'https://discord.gg/xsquhAuBH',
-    projectTrack: 'https://forms.gle/wRcKjHb1WLZTvrR68',
+    careerTrack: 'https://forms.gle/wRcKjHb1WLZTvrR68',
+    /** 커리어 트랙 소개 웨비나 (Cal.com) — 신청 폼 소개글에도 동일 링크 */
+    webinar: 'https://cal.com/jjeomnet/project-track-webinar',
     realtonPress: 'https://www.ksilbo.co.kr/news/articleView.html?idxno=1034784',
   },
   /** JSON-LD sameAs 등에 노출할 공식 채널 (추후 채널 추가 시 여기에) */
@@ -40,6 +42,7 @@ export const SITE = {
     '바닐라쩜넷',
     'IT Arena',
     '멘토링',
+    '커리어 트랙',
     '포트폴리오',
     '취업 준비',
     '커리어 스토리',
@@ -53,6 +56,7 @@ export const SITE = {
 export const NAV = [
   { href: '/', label: '홈' },
   { href: '/community', label: '커뮤니티' },
+  { href: '/career-track', label: '커리어 트랙' },
   { href: '/events', label: '행사' },
   // TODO: 콘텐츠(미디어) 탭 — /media 페이지 완성 후 다시 노출
   // { href: '/media', label: '콘텐츠' },

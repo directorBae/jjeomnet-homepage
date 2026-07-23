@@ -62,7 +62,7 @@ export default function Header() {
       </nav>
 
       <a
-        href={SITE.links.projectTrack}
+        href={SITE.links.careerTrack}
         target="_blank"
         rel="noopener noreferrer"
         className="btn-primary site-cta"
@@ -73,7 +73,7 @@ export default function Header() {
           borderRadius: 999,
         }}
       >
-        프로젝트 트랙 신청
+        커리어 트랙 신청
       </a>
     </header>
   );

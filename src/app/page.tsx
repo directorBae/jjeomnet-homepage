@@ -24,11 +24,17 @@ const tracks = [
     href: '/community',
     n: '01',
     title: '커뮤니티',
-    desc: '모든 시작과 도전을 이곳에서. 다 같이 만들고, 배포해요.',
+    desc: '모든 시작과 도전을 이곳에서. 매달 모이고, 언제든 디스코드에서 만나요.',
+  },
+  {
+    href: '/career-track',
+    n: '02',
+    title: '커리어 트랙',
+    desc: '관심사가 커리어가 되도록 — 멘토와 함께 완수하는 3·6개월 트랙.',
   },
   {
     href: '/events',
-    n: '02',
+    n: '03',
     title: '행사',
     desc: '흩어진 사람들이 한자리에. 무대에 서고, 서로 연결하여 시너지를 만듭니다.',
   },
@@ -277,7 +283,7 @@ export default function HomePage() {
             이렇게 시간을 써요.
           </h2>
           <p style={{ margin: '0 0 44px', fontSize: 17, color: 'rgba(240,242,246,.6)', fontWeight: 500 }}>
-            커뮤니티에서 시작해, 행사로 모여요.
+            커뮤니티에서 시작해, 트랙으로 완수하고, 행사로 모여요.
           </p>
           <div
             style={{
@@ -475,7 +481,7 @@ export default function HomePage() {
           <p style={{ margin: 0, fontSize: 17, color: 'rgba(240,242,246,.7)', fontWeight: 500 }}>
             상시 모집합니다. 디스코드에 들어오면 무료 트랙이 바로 제공되고,
             <br />
-            Spark · Growth 프로젝트 트랙 안내도 그 안에서 이루어져요.
+            Spark · Growth 커리어 트랙 안내도 그 안에서 이루어져요.
           </p>
           <CtaButtons />
         </div>

@@ -1,180 +1,91 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CtaButtons } from "@/components/Cta";
+import { PrimaryLink } from "@/components/Cta";
 import JsonLd from "@/components/JsonLd";
-import PricingPlans from "@/components/PricingPlans";
+import MentorShowcase from "@/components/MentorShowcase";
 import Faq from "@/components/Faq";
 import { SITE, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "커뮤니티",
   description:
-    "스펙이 아니라 스토리. 하고 싶은 사이드 프로젝트를 진짜로 함께 만들고, 멘토가 그것을 커리어 스토리(스펙)로 설계합니다. 디스코드 입장 시 무료 트랙 제공, Spark·Growth 프로젝트 트랙으로 배포·도메인·멘토링까지.",
+    "쩜넷 커뮤니티는 무료로 열려 있어요. 온라인 디스코드, 매달의 오프라인 모임, 바닐라쩜넷 데모데이 참석, 취·창업 큐레이션, 멘토와의 대화, 그리고 커리어 트랙 참여 자격까지 — 디스코드 입장으로 시작하세요.",
   alternates: { canonical: "/community" },
   openGraph: {
     title: "커뮤니티 · 쩜넷",
     description:
-      "하고 싶은 걸 하면서 스펙이 되는 곳. 실전 프로젝트로 커리어 스토리를 만듭니다.",
+      "무료로 열려 있는 쩜넷 커뮤니티 — 매달 모이는 오프라인 행사부터 멘토와의 대화까지.",
     url: "/community",
   },
 };
 
 const heroBg = "/images/hero-bg.jpg";
 
-const stats = [
+/** 커뮤니티 멤버에게 열리는 것들. href가 있으면 카드 전체가 링크로 동작 */
+const benefits: {
+  cadence: string;
+  title: string;
+  desc: string;
+  color: string;
+  href?: string;
+  linkLabel?: string;
+}[] = [
   {
-    value: "−43%",
-    title: "신입 개발 공고가 줄었어요",
-    sub: "’23 → ’25 상반기 · 995 → 564건",
-  },
-  {
-    value: "−73%",
-    title: "IT·통신 신입 공고는 더 줄었고요",
-    sub: "’26.3 · 전년 대비",
-  },
-];
-
-const programTags = [
-  "하고 싶은 프로젝트에서 출발",
-  "멘토가 ‘스펙’으로 설계",
-  "팀·개인 자유 · 팀은 2~4인",
-  "월 1회 정기 모임 · 트랙별 멘토링",
-];
-
-const storyRows = [
-  {
-    when: "가벼운 관심에서",
-    body: "“데이터 분석을 배우고 싶다” + “축구를 좋아한다”를 합쳐 ‘승부예측’ 주제로.",
-    role: "관심사를 주제로 구체화 · 팀 매칭",
-  },
-  {
-    when: "단순 예측을 넘어",
-    body: "승패만 맞히는 게 아니라, 무엇을 근거로 분석할지 범위를 잡아 기획.",
-    role: "기획 피드백 · 데이터 소스 조언",
-  },
-  {
-    when: "분석 로직을 더해",
-    body: "뉴스 기사와 최근 경기 분석 로직을 더해 예측의 질을 끌어올림.",
-    role: "IT 현업자 멘토링 · 무료 배포 · .net 도메인",
-  },
-  {
-    when: "역량이 된 프로젝트",
-    body: "단순 예측기가 아니라, 자연어 데이터 분석 역량을 증명하는 프로그램으로.",
-    role: "포트폴리오화 · 커리어 스토리 설계",
-  },
-];
-
-const activities = [
-  {
-    cadence: "월 1회",
-    title: "오프라인 정기 세션",
-    desc: "매달 한 번, 한자리에 모여 진행 상황을 공유하고 서로의 프로젝트에 피드백을 주고받아요.",
+    cadence: "매달",
+    title: "오프라인 모임",
+    desc: "매달 한 번, 한자리에 모여요. 진행 상황을 공유하고, 서로의 프로젝트에 피드백을 주고받아요.",
     color: "#86C3FA",
   },
   {
     cadence: "매달",
-    title: "바닐라쩜넷",
-    desc: "데모데이 형태의 네트워킹 행사. 만든 걸 무대에서 선보이고, 새 팀원도 이곳에서 모아요.",
+    title: "바닐라쩜넷 데모데이 참석",
+    desc: "전국 학교의 대학생들이 한자리에 모이는 네트워킹 행사예요. 무대를 관람하고, 새 팀원과 동료도 이곳에서 만나요.",
     color: "#FFBABA",
-  },
-  {
-    cadence: "월 1~2회",
-    title: "멘토 세션",
-    desc: "트랙별 멘토와 함께하는 멘토링·커리어 세션. 프로젝트를 ‘스펙’으로 설계하는 시간이에요.",
-    color: "#5EF479",
+    href: "/events#vanilla",
+    linkLabel: "행사 소개 보기 →",
   },
   {
     cadence: "상시",
-    title: "온라인 디스코드",
-    desc: "언제든 질문하고, 자랑하고, 함께 배포하는 상시 소통·협업 채널이에요.",
+    title: "온라인 커뮤니티",
+    desc: "디스코드에서 언제든 질문하고, 자랑하고, 소통해요. 입장하는 순간부터 모든 채널이 열려요.",
     color: "#FADF4B",
   },
-];
-
-const mentors = [
   {
-    tag: "A",
-    age: "23세",
-    items: [
-      "스타트업 커리어로 0원→연 8천만원",
-      "네이버·당근·레브잇 오퍼",
-      "시리즈 A 스타트업 거쳐 직접 창업",
-      "해커톤·창업대회 장관상 다수",
-    ],
+    cadence: "상시",
+    title: "취·창업 큐레이션",
+    desc: "채용 공고부터 공모전, 지원 사업까지 — 취업과 창업에 도움 되는 소식을 골라 커뮤니티에 공유해요.",
+    color: "#86C3FA",
   },
   {
-    tag: "B",
-    age: "24세",
-    items: [
-      "한예종 디자인 → UIUC 경영 석사",
-      "에이전시 인턴 → 삼성 인하우스 컨설팅 RA",
-      "브랜드·서비스 기획 경험",
-      "수많은 이력서·포트폴리오 첨삭",
-    ],
-  },
-  {
-    tag: "C",
-    age: "25세",
-    items: [
-      "강화학습 + Transformer 기반의 World Model 연구",
-      "대학교 3학년 나이에 랩장을 거쳐 World Model 핵심 성과",
-      "연구를 리드 경험으로, S전자에 취업 성공",
-      "오랜 연구 경험에서 길어 올린 깊이",
-    ],
-  },
-  {
-    tag: "D",
-    age: "23세",
-    items: [
-      "과학고를 거쳐 → 과학기술원까지",
-      "1티어 학회 논문 게재",
-      "뛰어난 연구 성과와 Publication 경험",
-    ],
-  },
-  {
-    tag: "E",
-    age: "22세",
-    items: [
-      "대학교 1학년 때부터 연구 리드",
-      "다년간의 스타트업 경험",
-      "다양한 종류의 스펙을 거쳐 P철강에 취업 성공",
-      "해커톤·창업대회 장관상 다수",
-    ],
+    cadence: "상시",
+    title: "멘토와의 대화",
+    desc: "서로 다른 길을 걸어온 20대 멘토들과 커뮤니티 안에서 자유롭게 대화하고 조언을 구해요.",
+    color: "#5EF479",
   },
 ];
 
 const faqs = [
   {
     q: "커뮤니티 가입은 무료인가요?",
-    a: "네. 디스코드에 입장하는 것만으로 무료 트랙이 바로 제공돼요. Spark·Growth 프로젝트 트랙 안내와 신청도 디스코드에서 이루어집니다.",
+    a: "네. 디스코드에 입장하는 것만으로 무료예요. 행사 소식, 멘토와의 대화, 프로젝트 자랑까지 모두 그 안에서 이루어져요.",
   },
   {
-    q: "혼자 참여해도 되나요?",
-    a: "네. 팀/개인 모두 가능하며, 팀 매칭을 지원합니다. 팀은 2~4인까지 구성됩니다.",
+    q: "커뮤니티만 참여해도 되나요?",
+    a: "네, 환영해요. 커리어 트랙은 원할 때 신청하면 되고, 커뮤니티 활동만으로도 매달의 모임·바닐라쩜넷 참석, 취·창업 큐레이션, 멘토와의 대화가 열려 있어요.",
   },
   {
     q: "꼭 개발을 할 줄 알아야 하나요?",
-    a: "관심사·태도·도메인이 더 중요합니다. 하고 싶은 프로젝트에서 출발해 멘토와 함께 스펙으로 만듭니다.",
-  },
-  {
-    q: "기수제인가요?",
-    a: "아니요. 기수 없이 영속·병렬로 운영하며 상시 모집합니다. 들어온 팀부터 바로 운영됩니다.",
-  },
-  {
-    q: "요금제는 중간에 바꿀 수 있나요?",
-    a: "Spark ↔ Growth로 자유롭게 업그레이드·다운그레이드할 수 있어요. 프로젝트가 진행되는 기간 동안만 자유롭게 납부하면 됩니다.",
-  },
-  {
-    q: "배포·도메인은 정말 무료인가요?",
-    a: "무료 SaaS형 배포와 .jjeom.net / .net 도메인을 요금제에 따라 지원합니다.",
+    a: "아니요. 관심사·태도·도메인이 더 중요합니다. 기획·디자인·연구 등 다양한 배경의 멤버들이 함께하고 있어요.",
   },
   {
     q: "오프라인 참여가 필수인가요?",
     a: "온라인 + 바닐라쩜넷 오프라인 병행입니다. 오프라인은 네트워킹·발표 기회로 권장됩니다.",
   },
+  {
+    q: "커리어 트랙은 어떻게 신청하나요?",
+    a: "커리어 트랙 페이지에서 진행 과정과 요금제를 확인하고, 신청 폼으로 신청하면 돼요. 멘토와 함께 Spark 3개월 · Growth 6개월 과정으로 커리어를 만드는 프로그램입니다.",
+  },
 ];
-
-const storyGrid = "minmax(120px,0.7fr) 1.7fr minmax(150px,1fr)";
 
 export default function CommunityPage() {
   const breadcrumb = {
@@ -205,7 +116,7 @@ export default function CommunityPage() {
     <>
       <JsonLd data={[breadcrumb, faqLd]} />
 
-      {/* ACT 1 · HOOK */}
+      {/* HERO */}
       <section
         style={{
           position: "relative",
@@ -257,7 +168,7 @@ export default function CommunityPage() {
               borderRadius: 999,
             }}
           >
-            꿈을 향해 달려가는 모든 청년들을 위해
+            쩜넷 커뮤니티 · 입장 무료
           </span>
           <h1
             style={{
@@ -268,8 +179,9 @@ export default function CommunityPage() {
               letterSpacing: "-.04em",
             }}
           >
-            스펙은 다 쌓았는데,
-            <br />왜 자꾸 떨어질까?
+            혼자 하지 마세요.
+            <br />
+            매달, 함께 모여요<span style={{ color: "#86C3FA" }}>.</span>
           </h1>
           <p
             style={{
@@ -281,275 +193,38 @@ export default function CommunityPage() {
               fontWeight: 500,
             }}
           >
-            AI가 반복 업무를 대체하면서, 경력·AI 활용 인재 중심 채용이
-            이루어지고 있어요.
-            <br />
-            실력도, 학벌도, 스펙도 — 이제 그것만으로는 부족합니다.
-          </p>
-        </div>
-      </section>
-
-      <section
-        style={{
-          padding: "0 clamp(20px,5vw,56px) clamp(80px,10vw,140px)",
-          background: "#07080c",
-        }}
-      >
-        <div style={{ maxWidth: 1000, margin: "0 auto" }}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns:
-                "repeat(auto-fit,minmax(min(100%,260px),1fr))",
-              gap: 16,
-              marginBottom: 16,
-            }}
-          >
-            {stats.map((s) => (
-              <div
-                key={s.value}
-                style={{
-                  background: "#11131d",
-                  border: "1px solid rgba(255,255,255,.07)",
-                  borderRadius: 18,
-                  padding: 34,
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: "clamp(46px,6.4vw,68px)",
-                    fontWeight: 800,
-                    color: "#FF8B8B",
-                    letterSpacing: "-.03em",
-                    lineHeight: 1,
-                  }}
-                >
-                  {s.value}
-                </div>
-                <div style={{ marginTop: 16, fontSize: 16, fontWeight: 700 }}>
-                  {s.title}
-                </div>
-                <div
-                  style={{
-                    marginTop: 6,
-                    fontSize: 14,
-                    color: "rgba(240,242,246,.55)",
-                    fontWeight: 500,
-                  }}
-                >
-                  {s.sub}
-                </div>
-              </div>
-            ))}
-          </div>
-          <p
-            style={{
-              margin: "0 0 44px",
-              fontSize: 12.5,
-              color: "rgba(240,242,246,.38)",
-              fontWeight: 500,
-            }}
-          >
-            출처 · 조선비즈, 중앙일보 (2025–2026)
-          </p>
-          <div style={{ textAlign: "center", maxWidth: 760, margin: "0 auto" }}>
-            <h2
-              style={{
-                margin: "0 0 16px",
-                fontSize: "clamp(28px,4.2vw,52px)",
-                fontWeight: 800,
-                letterSpacing: "-.03em",
-                lineHeight: 1.2,
-              }}
-            >
-              이제 스펙이 아니라,{" "}
-              <span style={{ color: "#86C3FA" }}>스토리</span>예요.
-            </h2>
-            <p
-              style={{
-                margin: 0,
-                fontSize: "clamp(16px,1.7vw,19px)",
-                lineHeight: 1.6,
-                color: "rgba(240,242,246,.68)",
-                fontWeight: 500,
-              }}
-            >
-              하고 싶은 프로젝트를 하고, 그걸 스토리로 스펙화한다. 도메인에 맞춘
-              ‘나’를 보여주는 사람이 결국 남습니다.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ACT 2 · 프로그램 소개 */}
-      <section
-        style={{
-          padding: "clamp(74px,9vw,128px) clamp(20px,5vw,56px)",
-          background: "#0b0d15",
-        }}
-      >
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <h2
-            style={{
-              margin: "0 0 22px",
-              fontSize: "clamp(28px,3.8vw,48px)",
-              fontWeight: 800,
-              letterSpacing: "-.03em",
-              lineHeight: 1.16,
-            }}
-          >
-            그래서, 하고 싶은 걸 하면서
-            <br />
-            스펙이 되는 곳을 만들었어요.
-          </h2>
-          <p
-            style={{
-              margin: "0 0 36px",
-              maxWidth: 640,
-              fontSize: 17,
-              lineHeight: 1.62,
-              color: "rgba(240,242,246,.68)",
-              fontWeight: 500,
-            }}
-          >
-            단순한 프로젝트 모임이 아니에요. 하고 싶은 사이드 프로젝트를 진짜로
-            함께 만들고, 멘토가 그걸 ‘스펙’으로 만들어 줍니다.
+            온라인 디스코드부터 매달의 오프라인 모임, 바닐라쩜넷 데모데이,
+            취·창업 큐레이션, 멘토와의 대화까지 — 쩜넷의 문은 디스코드에서
+            열려요.
           </p>
           <div
             style={{
               display: "flex",
+              gap: 14,
               flexWrap: "wrap",
-              gap: 10,
-              marginBottom: 48,
+              justifyContent: "center",
             }}
           >
-            {programTags.map((t) => (
-              <span
-                key={t}
-                style={{
-                  fontSize: 14.5,
-                  fontWeight: 600,
-                  color: "rgba(240,242,246,.78)",
-                  background: "#11131d",
-                  border: "1px solid rgba(255,255,255,.09)",
-                  padding: "11px 18px",
-                  borderRadius: 999,
-                }}
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-
-          <div
-            style={{
-              background: "#0e1018",
-              border: "1px solid rgba(255,255,255,.07)",
-              borderRadius: 22,
-              padding: "clamp(24px,3.6vw,42px)",
-            }}
-          >
-            <div
-              style={{
-                fontSize: 14,
-                fontWeight: 600,
-                color: "rgba(240,242,246,.5)",
-                marginBottom: 6,
-              }}
-            >
-              예를 들면 — 한 팀의 이야기
-            </div>
-            <div
-              style={{
-                fontSize: "clamp(21px,2.6vw,28px)",
-                fontWeight: 800,
-                letterSpacing: "-.02em",
-                marginBottom: 30,
-              }}
-            >
-              ‘축구 승부예측 프로그램’
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              {storyRows.map((r, i) => (
-                <div
-                  key={r.when}
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: storyGrid,
-                    gap: 18,
-                    alignItems: "start",
-                    paddingBottom: i < storyRows.length - 1 ? 16 : 0,
-                    borderBottom:
-                      i < storyRows.length - 1
-                        ? "1px solid rgba(255,255,255,.07)"
-                        : "none",
-                  }}
-                >
-                  <div style={{ fontSize: 15.5, fontWeight: 800 }}>
-                    {r.when}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: 15,
-                      lineHeight: 1.55,
-                      color: "rgba(240,242,246,.66)",
-                      fontWeight: 500,
-                    }}
-                  >
-                    {r.body}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: 13.5,
-                      lineHeight: 1.5,
-                      color: "#86C3FA",
-                      fontWeight: 600,
-                    }}
-                  >
-                    {r.role}
-                  </div>
-                </div>
-              ))}
-            </div>
-            <p
-              style={{
-                margin: "30px 0 0",
-                fontSize: "clamp(16px,1.9vw,20px)",
-                fontWeight: 700,
-                lineHeight: 1.5,
-                paddingTop: 26,
-                borderTop: "1px solid rgba(255,255,255,.1)",
-              }}
-            >
-              그냥 취미 프로젝트가,{" "}
-              <span style={{ color: "#86C3FA" }}>
-                설명할 수 있는 데이터 분석 커리어
-              </span>
-              가 됐어요.
-            </p>
-          </div>
-
-          {/* 진행 과정 상세 페이지 진입점 */}
-          <div
-            style={{ marginTop: 28, display: "flex", justifyContent: "center" }}
-          >
+            <PrimaryLink href={SITE.links.discord} fontSize={16.5} padding="17px 30px">
+              디스코드 무료 입장 →
+            </PrimaryLink>
             <Link
-              href="/community/program"
+              href="/career-track"
               className="btn-ghost"
               style={{
                 fontWeight: 700,
-                fontSize: 15.5,
-                padding: "15px 28px",
+                fontSize: 16.5,
+                padding: "17px 30px",
                 borderRadius: 999,
               }}
             >
-              가입하면 어떻게 진행되나요? — 더 자세히 알아보기 →
+              커리어 트랙 알아보기
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ACT 2.5 · 정기 활동 */}
+      {/* 커뮤니티 혜택 */}
       <section
         style={{
           padding: "clamp(74px,9vw,128px) clamp(20px,5vw,56px)",
@@ -566,9 +241,9 @@ export default function CommunityPage() {
               lineHeight: 1.16,
             }}
           >
-            들어오면, 매달
+            들어오면, 이 모든 게
             <br />
-            이런 걸 함께해요.
+            함께 열려요.
           </h2>
           <p
             style={{
@@ -580,8 +255,8 @@ export default function CommunityPage() {
               fontWeight: 500,
             }}
           >
-            온라인과 오프라인을 오가며, 꾸준히 모이고 만들고 연결돼요. 아래
-            활동들이 매달 반복됩니다.
+            온라인과 오프라인을 오가며, 꾸준히 모이고 만들고 연결돼요. 커뮤니티
+            멤버라면 누구에게나 열려 있는 것들이에요.
           </p>
           <div
             style={{
@@ -591,59 +266,291 @@ export default function CommunityPage() {
               gap: 16,
             }}
           >
-            {activities.map((a) => (
-              <div
-                key={a.title}
+            {benefits.map((b) => {
+              const inner = (
+                <>
+                  <span
+                    style={{
+                      display: "inline-block",
+                      alignSelf: "flex-start",
+                      fontSize: 12.5,
+                      fontWeight: 700,
+                      color: b.color,
+                      background: "rgba(255,255,255,.05)",
+                      border: `1px solid ${b.color}44`,
+                      padding: "5px 11px",
+                      borderRadius: 999,
+                      marginBottom: 18,
+                    }}
+                  >
+                    {b.cadence}
+                  </span>
+                  <div
+                    style={{
+                      fontSize: 19,
+                      fontWeight: 800,
+                      letterSpacing: "-.02em",
+                      marginBottom: 12,
+                    }}
+                  >
+                    {b.title}
+                  </div>
+                  <p
+                    style={{
+                      margin: b.href ? "0 0 18px" : 0,
+                      fontSize: 14.5,
+                      lineHeight: 1.6,
+                      color: "rgba(240,242,246,.64)",
+                      fontWeight: 500,
+                    }}
+                  >
+                    {b.desc}
+                  </p>
+                  {b.href && b.linkLabel && (
+                    <span
+                      style={{
+                        marginTop: "auto",
+                        fontSize: 14.5,
+                        fontWeight: 700,
+                        color: b.color,
+                      }}
+                    >
+                      {b.linkLabel}
+                    </span>
+                  )}
+                </>
+              );
+              return b.href ? (
+                <Link
+                  key={b.title}
+                  href={b.href}
+                  className="card-link"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    background: "#11131d",
+                    borderRadius: 18,
+                    padding: 28,
+                  }}
+                >
+                  {inner}
+                </Link>
+              ) : (
+                <div
+                  key={b.title}
+                  style={{
+                    background: "#11131d",
+                    border: "1px solid rgba(255,255,255,.07)",
+                    borderRadius: 18,
+                    padding: 28,
+                  }}
+                >
+                  {inner}
+                </div>
+              );
+            })}
+            {/* 커리어 트랙 참여권 — 트랙 페이지로 연결되는 카드 */}
+            <Link
+              href="/career-track"
+              className="card-link"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                background:
+                  "linear-gradient(160deg,rgba(165,148,247,.14),#11131d)",
+                borderColor: "rgba(165,148,247,.36)",
+                borderRadius: 18,
+                padding: 28,
+              }}
+            >
+              <span
                 style={{
-                  background: "#11131d",
-                  border: "1px solid rgba(255,255,255,.07)",
-                  borderRadius: 18,
-                  padding: 28,
+                  alignSelf: "flex-start",
+                  fontSize: 12.5,
+                  fontWeight: 700,
+                  color: "#A594F7",
+                  background: "rgba(255,255,255,.05)",
+                  border: "1px solid #A594F744",
+                  padding: "5px 11px",
+                  borderRadius: 999,
+                  marginBottom: 18,
                 }}
               >
-                <span
-                  style={{
-                    display: "inline-block",
-                    fontSize: 12.5,
-                    fontWeight: 700,
-                    color: a.color,
-                    background: "rgba(255,255,255,.05)",
-                    border: `1px solid ${a.color}44`,
-                    padding: "5px 11px",
-                    borderRadius: 999,
-                    marginBottom: 18,
-                  }}
-                >
-                  {a.cadence}
-                </span>
-                <div
-                  style={{
-                    fontSize: 19,
-                    fontWeight: 800,
-                    letterSpacing: "-.02em",
-                    marginBottom: 12,
-                  }}
-                >
-                  {a.title}
-                </div>
-                <p
-                  style={{
-                    margin: 0,
-                    fontSize: 14.5,
-                    lineHeight: 1.6,
-                    color: "rgba(240,242,246,.64)",
-                    fontWeight: 500,
-                  }}
-                >
-                  {a.desc}
-                </p>
+                참여권
+              </span>
+              <div
+                style={{
+                  fontSize: 19,
+                  fontWeight: 800,
+                  letterSpacing: "-.02em",
+                  marginBottom: 12,
+                }}
+              >
+                커리어 트랙 참여
               </div>
-            ))}
+              <p
+                style={{
+                  margin: "0 0 18px",
+                  fontSize: 14.5,
+                  lineHeight: 1.6,
+                  color: "rgba(240,242,246,.64)",
+                  fontWeight: 500,
+                }}
+              >
+                멘토와 함께 커리어를 만드는 Spark·Growth 트랙, 커뮤니티
+                멤버에게 참여 자격이 열려요.
+              </p>
+              <span
+                style={{
+                  marginTop: "auto",
+                  fontSize: 14.5,
+                  fontWeight: 700,
+                  color: "#A594F7",
+                }}
+              >
+                자세히 보기 →
+              </span>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* ACT 3 · 멘토진 */}
+      {/* 커리어 트랙 티저 */}
+      <section
+        style={{
+          padding: "clamp(74px,9vw,128px) clamp(20px,5vw,56px)",
+          background: "#0b0d15",
+        }}
+      >
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <h2
+            style={{
+              margin: "0 0 18px",
+              fontSize: "clamp(28px,3.6vw,46px)",
+              fontWeight: 800,
+              letterSpacing: "-.03em",
+              lineHeight: 1.16,
+            }}
+          >
+            더 깊게 가고 싶다면,
+            <br />
+            커리어 트랙.
+          </h2>
+          <p
+            style={{
+              margin: "0 0 40px",
+              maxWidth: 640,
+              fontSize: 16.5,
+              lineHeight: 1.6,
+              color: "rgba(240,242,246,.64)",
+              fontWeight: 500,
+            }}
+          >
+            취업, 창업을 위한 시장 조사 — 분명한 목적 위에서 멘토와 함께
+            커리어를 만드는 프로그램이에요. 첫 기획 미팅에서 방향과 일정을
+            함께 잡고, 배포와 데모데이까지 갑니다.
+          </p>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(auto-fit,minmax(min(100%,280px),1fr))",
+              gap: 16,
+              marginBottom: 28,
+            }}
+          >
+            <Link
+              href="/career-track"
+              className="card-link"
+              style={{
+                display: "block",
+                background: "#11131d",
+                borderRadius: 18,
+                padding: 28,
+              }}
+            >
+              <div style={{ fontSize: 20, fontWeight: 800, marginBottom: 8 }}>
+                Spark
+              </div>
+              <div
+                style={{
+                  fontSize: 30,
+                  fontWeight: 800,
+                  color: "#86C3FA",
+                  letterSpacing: "-.02em",
+                  marginBottom: 8,
+                }}
+              >
+                3개월
+              </div>
+              <p
+                style={{
+                  margin: 0,
+                  fontSize: 14.5,
+                  lineHeight: 1.6,
+                  color: "rgba(240,242,246,.64)",
+                  fontWeight: 500,
+                }}
+              >
+                아이디어에 불을 붙여, 3개월 안에 실제 배포까지.
+              </p>
+            </Link>
+            <Link
+              href="/career-track"
+              className="card-link"
+              style={{
+                display: "block",
+                background:
+                  "linear-gradient(180deg,rgba(134,195,250,.09),#11131d)",
+                borderColor: "rgba(134,195,250,.32)",
+                borderRadius: 18,
+                padding: 28,
+              }}
+            >
+              <div style={{ fontSize: 20, fontWeight: 800, marginBottom: 8 }}>
+                Growth
+              </div>
+              <div
+                style={{
+                  fontSize: 30,
+                  fontWeight: 800,
+                  color: "#86C3FA",
+                  letterSpacing: "-.02em",
+                  marginBottom: 8,
+                }}
+              >
+                6개월
+              </div>
+              <p
+                style={{
+                  margin: 0,
+                  fontSize: 14.5,
+                  lineHeight: 1.6,
+                  color: "rgba(240,242,246,.64)",
+                  fontWeight: 500,
+                }}
+              >
+                6개월 동안 수익·시장 탐색·커리어까지. (Spark 포함)
+              </p>
+            </Link>
+          </div>
+          <Link
+            href="/career-track"
+            className="btn-ghost"
+            style={{
+              display: "inline-block",
+              fontWeight: 700,
+              fontSize: 15.5,
+              padding: "15px 28px",
+              borderRadius: 999,
+            }}
+          >
+            진행 과정·요금제 자세히 보기 →
+          </Link>
+        </div>
+      </section>
+
+      {/* 멘토진 */}
       <section
         style={{
           padding: "clamp(74px,9vw,128px) clamp(20px,5vw,56px)",
@@ -678,142 +585,58 @@ export default function CommunityPage() {
             법을 누구보다 잘 압니다. 모두 20대 멘토들입니다. 멘토들도 도전하고,
             나아가고 있으며 세상과 닿는 법을 조금 일찍 알게 된 청춘들입니다.
           </p>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns:
-                "repeat(auto-fit,minmax(min(100%,230px),1fr))",
-              gap: 16,
-            }}
-          >
-            {mentors.map((m) => (
+          <MentorShowcase
+            extra={
               <div
-                key={m.tag}
                 style={{
-                  background: "#11131d",
-                  border: "1px solid rgba(255,255,255,.07)",
-                  borderRadius: 18,
-                  padding: 28,
+                  background:
+                    "linear-gradient(160deg,rgba(134,195,250,.12),#11131d)",
+                  border: "1px solid rgba(134,195,250,.28)",
+                  borderRadius: 20,
+                  padding: "clamp(26px,3vw,34px)",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
                 }}
               >
                 <div
                   style={{
-                    width: 42,
-                    height: 42,
-                    borderRadius: "50%",
-                    background: "rgba(134,195,250,.16)",
+                    fontSize: 13,
+                    fontWeight: 700,
                     color: "#86C3FA",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontWeight: 800,
-                    fontSize: 18,
-                    marginBottom: 18,
+                    marginBottom: 12,
                   }}
                 >
-                  {m.tag}
+                  멘토와의 대화
                 </div>
                 <div
-                  style={{
-                    fontSize: 12.5,
-                    fontWeight: 600,
-                    color: "rgba(240,242,246,.45)",
-                    marginTop: -6,
-                    marginBottom: 14,
-                  }}
+                  style={{ fontSize: 15.5, fontWeight: 700, lineHeight: 1.55 }}
                 >
-                  {m.age}
+                  커뮤니티 안에서 언제든 멘토와 대화할 수 있어요. 커리어를 함께
+                  만들고 싶다면,{" "}
+                  <Link
+                    href="/career-track"
+                    style={{
+                      color: "#86C3FA",
+                      textDecoration: "underline",
+                      textUnderlineOffset: 3,
+                    }}
+                  >
+                    커리어 트랙
+                  </Link>
+                  에서 전담 멘토를 만나요.
                 </div>
-                <ul
-                  style={{
-                    margin: 0,
-                    paddingLeft: 18,
-                    fontSize: 14,
-                    lineHeight: 1.7,
-                    color: "rgba(240,242,246,.66)",
-                    fontWeight: 500,
-                  }}
-                >
-                  {m.items.map((it) => (
-                    <li key={it} style={{ paddingLeft: 4 }}>
-                      {it}
-                    </li>
-                  ))}
-                </ul>
               </div>
-            ))}
-            <div
-              style={{
-                background:
-                  "linear-gradient(160deg,rgba(134,195,250,.12),#11131d)",
-                border: "1px solid rgba(134,195,250,.28)",
-                borderRadius: 18,
-                padding: 28,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <div
-                style={{
-                  fontSize: 13,
-                  fontWeight: 700,
-                  color: "#86C3FA",
-                  marginBottom: 12,
-                }}
-              >
-                커리어 세션
-              </div>
-              <div style={{ fontSize: 15.5, fontWeight: 700, lineHeight: 1.5 }}>
-                프로젝트가 아니라, 당신의 스토리를 만듭니다 — 스택보다 스토리,
-                스토리를 커리어로, 결국 당신의 이야기.
-              </div>
-            </div>
-          </div>
+            }
+          />
         </div>
       </section>
 
-      {/* ACT 4 · 가격 */}
+      {/* Q&A */}
       <section
-        id="pricing"
         style={{
           padding: "clamp(74px,9vw,128px) clamp(20px,5vw,56px)",
           background: "#0b0d15",
-        }}
-      >
-        <div style={{ maxWidth: 1180, margin: "0 auto" }}>
-          <h2
-            style={{
-              margin: "0 0 14px",
-              fontSize: "clamp(28px,3.6vw,46px)",
-              fontWeight: 800,
-              letterSpacing: "-.03em",
-            }}
-          >
-            어디까지 갈지는, 당신이 정해요.
-          </h2>
-          <p
-            style={{
-              margin: "0 0 44px",
-              fontSize: 16.5,
-              color: "rgba(240,242,246,.64)",
-              fontWeight: 500,
-            }}
-          >
-            혜택은 위로 갈수록 쌓입니다 ·{" "}
-            <span style={{ color: "#86C3FA", fontWeight: 700 }}>
-              Spark ⊂ Growth
-            </span>
-          </p>
-          <PricingPlans />
-        </div>
-      </section>
-
-      {/* ACT 5 · Q&A */}
-      <section
-        style={{
-          padding: "clamp(74px,9vw,128px) clamp(20px,5vw,56px)",
-          background: "#07080c",
         }}
       >
         <div style={{ maxWidth: 880, margin: "0 auto" }}>
@@ -831,7 +654,7 @@ export default function CommunityPage() {
         </div>
       </section>
 
-      {/* 신청 CTA */}
+      {/* 합류 CTA — 디스코드 중심 */}
       <section
         style={{
           position: "relative",
@@ -891,14 +714,8 @@ export default function CommunityPage() {
               fontWeight: 500,
             }}
           >
-            상시 모집해요. 온라인 + 바닐라쩜넷 오프라인 병행, 들어온 팀부터 바로
-            시작합니다.
+            입장은 무료예요. 오늘 들어와서, 이번 달 행사에서 만나요.
           </p>
-          <CtaButtons
-            fontSize={16.5}
-            secondaryHref="/community/program"
-            secondaryLabel="더 자세히 알아보기"
-          />
 
           {/* 디스코드 합류 안내 */}
           <div
@@ -971,7 +788,7 @@ export default function CommunityPage() {
                     marginBottom: 8,
                   }}
                 >
-                  입장 즉시 무료 트랙
+                  입장 즉시 무료 멤버
                 </div>
                 <p
                   style={{
@@ -982,8 +799,8 @@ export default function CommunityPage() {
                     fontWeight: 500,
                   }}
                 >
-                  초대 링크로 들어오는 순간 무료 트랙이 제공돼요. 온라인
-                  커뮤니티 활동을 비용 없이 바로 시작할 수 있어요.
+                  초대 링크로 들어오는 순간 커뮤니티 멤버예요. 행사 소식과
+                  멘토와의 대화, 온라인 활동을 비용 없이 바로 시작할 수 있어요.
                 </p>
               </div>
               <div
@@ -1002,7 +819,7 @@ export default function CommunityPage() {
                     marginBottom: 8,
                   }}
                 >
-                  프로젝트 트랙 안내
+                  커리어 트랙 참여권
                 </div>
                 <p
                   style={{
@@ -1013,13 +830,24 @@ export default function CommunityPage() {
                     fontWeight: 500,
                   }}
                 >
-                  Spark · Growth 프로젝트 트랙의 안내와 신청도 모두 디스코드
-                  안에서 이루어져요. 배포·도메인·멘토링까지 여기서 연결됩니다.
+                  커뮤니티 멤버라면 누구나 Spark·Growth 트랙에 참여할 수
+                  있어요. 자세한 과정은{" "}
+                  <Link
+                    href="/career-track"
+                    style={{
+                      color: "#86C3FA",
+                      textDecoration: "underline",
+                      textUnderlineOffset: 3,
+                    }}
+                  >
+                    커리어 트랙 페이지
+                  </Link>
+                  에서 확인하세요.
                 </p>
               </div>
             </div>
             <a
-              href={SITE.links.projectTrack}
+              href={SITE.links.discord}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -1032,7 +860,7 @@ export default function CommunityPage() {
                 borderRadius: 12,
               }}
             >
-              프로젝트 트랙 신청하기 →
+              디스코드 입장하기 →
             </a>
           </div>
         </div>

@@ -17,7 +17,7 @@ export const EVENTS: JnEvent[] = [
     slug: 'vanilla',
     name: '바닐라쩜넷',
     date: '매달 정기 개최',
-    concept: '동아리원들이 한자리에 모이는 네트워킹 행사. 지금은 20+ 동아리 네트워크로 확장 중이에요.',
+    concept: '전국 학교의 대학생들이 한자리에 모이는 네트워킹 행사. 지금은 20+ 동아리 네트워크로 확장 중이에요.',
     photo: '/images/vanilla.jpg',
     color: '#FFBABA',
   },

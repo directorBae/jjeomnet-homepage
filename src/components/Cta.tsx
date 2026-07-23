@@ -22,10 +22,10 @@ export function PrimaryLink({ href, children, external = true, fontSize = 16, pa
   );
 }
 
-/** 프로젝트 트랙 신청 단일 버튼 (사이트 곳곳의 표준 CTA).
+/** 커리어 트랙 신청 단일 버튼 (사이트 곳곳의 표준 CTA).
  *  secondaryHref/secondaryLabel을 주면 내부 경로로 가는 고스트 버튼이 함께 노출됩니다. */
 export function CtaButtons({
-  primaryLabel = '프로젝트 트랙 신청하기 →',
+  primaryLabel = '커리어 트랙 신청하기 →',
   fontSize = 16,
   justify = 'center',
   secondaryHref,
@@ -39,7 +39,7 @@ export function CtaButtons({
 }) {
   return (
     <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: justify }}>
-      <PrimaryLink href={SITE.links.projectTrack} fontSize={fontSize} padding="17px 30px">
+      <PrimaryLink href={SITE.links.careerTrack} fontSize={fontSize} padding="17px 30px">
         {primaryLabel}
       </PrimaryLink>
       {secondaryHref && secondaryLabel && (

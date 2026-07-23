@@ -1,14 +1,23 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import Modal from './Modal';
 import { SITE } from '@/lib/site';
 
 type Plan = {
   key: string;
   name: string;
-  price: string;
-  period: string;
+  /** 완주 기간 — 카드에서 가장 강조되는 값 */
+  duration: string;
+  /** 기간 전체 특가 */
+  packagePrice: string;
+  /** 월별 정가 × 기간 */
+  originalPrice: string;
+  /** 월별 정가 표시 */
+  monthly: string;
+  /** 기간 종료 후 월 단위 연장 요금 */
+  extendMonthly: string;
   icon: string;
   tagline: string;
   highlights: string[];
@@ -20,12 +29,16 @@ const PLANS: Plan[] = [
   {
     key: 'spark',
     name: 'Spark',
-    price: '₩19,900',
-    period: '/월',
+    duration: '3개월',
+    packagePrice: '₩49,900',
+    originalPrice: '₩59,700',
+    monthly: '월 ₩19,900',
+    extendMonthly: '월 ₩29,900',
     icon: '/images/icon-spark.svg',
-    tagline: '아이디어에 불을 붙여, 실제 배포까지.',
-    highlights: ['무료 배포 + .jjeom.net 도메인', '프로젝트 코칭', 'IT 현업자 멘토링 · 월 1회'],
+    tagline: '아이디어에 불을 붙여, 3개월 안에 실제 배포까지.',
+    highlights: ['첫 미팅에서 멘토가 기획·일정 설계', '무료 배포 + .jjeom.net 도메인', 'IT 현업자 멘토링 · 월 1회'],
     features: [
+      '3개월 완주 과정 — 첫 미팅에서 멘토가 기획·일정 설계',
       '무료 SaaS형 배포 + .jjeom.net 도메인',
       '프로젝트 코칭',
       'IT 현업자 멘토링 · 월 1회',
@@ -38,17 +51,21 @@ const PLANS: Plan[] = [
   {
     key: 'growth',
     name: 'Growth',
-    price: '₩39,900',
-    period: '/월',
+    duration: '6개월',
+    packagePrice: '₩199,900',
+    originalPrice: '₩239,400',
+    monthly: '월 ₩39,900',
+    extendMonthly: '월 ₩69,900',
     icon: '/images/icon-growth.svg',
-    tagline: '수익·창업·커리어로 성장. (Spark 포함)',
-    highlights: ['Spark의 모든 혜택 포함', 'IT 현업자 멘토링 · 2주 1회', '포트폴리오 코칭'],
+    tagline: '6개월 동안 수익·시장 탐색·커리어까지. (Spark 포함)',
+    highlights: ['Spark의 모든 혜택 포함', 'LinkedIn 커리어 코칭 — 규모 키우기', 'IT 현업자 멘토링 · 2주 1회'],
     features: [
-      'Spark의 모든 혜택 포함 (월 1회 정기 모임 등)',
+      '6개월 완주 과정 — Spark의 모든 혜택 포함 (월 1회 정기 모임 등)',
+      'LinkedIn 커리어 코칭 — 프로필 가꾸기 · 글쓰기 · 1촌 네트워킹 (네이버·당근·레브잇 동시 오퍼 멘토 담당)',
       'IT 현업자 멘토링 · 2주 1회 (Spark의 2배)',
       '포트폴리오 코칭',
       '.net 도메인 지원',
-      'LinkedIn·SNS 홍보 · 외주 연계',
+      'SNS 홍보 · 외주 연계',
       '기업 면접 코칭',
       '창업자 강의 & 네트워킹',
     ],
@@ -57,9 +74,10 @@ const PLANS: Plan[] = [
 ];
 
 const POLICIES = [
+  'Spark는 3개월, Growth는 6개월 완주 과정으로 진행돼요',
+  '기간 종료 후에도 이어가고 싶다면 월 단위 연장 — Spark 월 ₩29,900 · Growth 월 ₩69,900',
   'Spark ↔ Growth 자유롭게 업그레이드 · 다운그레이드',
-  '프로젝트가 진행되는 기간 동안 자유롭게 납부',
-  '디스코드 입장은 무료 — 들어오는 즉시 무료 트랙 제공, Spark·Growth 트랙 안내·신청도 디스코드에서 진행',
+  '커뮤니티(디스코드) 입장은 무료 — 커리어 트랙 신청은 신청 폼에서 진행',
 ];
 
 function Check() {
@@ -118,9 +136,12 @@ export default function PricingPlans() {
         >
           FREE
         </span>
-        <span style={{ fontSize: 'clamp(15px,1.7vw,18px)', fontWeight: 700 }}>디스코드에 들어오면 무료 트랙이 바로 제공돼요.</span>
+        <span style={{ fontSize: 'clamp(15px,1.7vw,18px)', fontWeight: 700 }}>쩜넷 커뮤니티 입장은 무료예요.</span>
         <span style={{ fontSize: 14.5, color: 'rgba(240,242,246,.62)', fontWeight: 500 }}>
-          Spark·Growth 프로젝트 트랙 안내와 신청도 디스코드 안에서 이루어져요.
+          트랙 신청 전에 커뮤니티에서 분위기를 먼저 봐도 좋아요.{' '}
+          <Link href="/community" style={{ color: '#86C3FA', textDecoration: 'underline', textUnderlineOffset: 3 }}>
+            커뮤니티 알아보기 →
+          </Link>
         </span>
       </div>
 
@@ -150,9 +171,32 @@ export default function PricingPlans() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={p.icon} alt="" width={46} height={46} aria-hidden style={{ width: 46, height: 46, objectFit: 'contain' }} />
             <div style={{ fontSize: 24, fontWeight: 800 }}>{p.name}</div>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-              <span style={{ fontSize: 32, fontWeight: 800, color: '#86C3FA' }}>{p.price}</span>
-              <span style={{ fontSize: 15, color: 'rgba(240,242,246,.55)', fontWeight: 600 }}>{p.period}</span>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+              <span style={{ fontSize: 38, fontWeight: 800, color: '#86C3FA', letterSpacing: '-.02em' }}>{p.duration}</span>
+              <span style={{ fontSize: 15, color: 'rgba(240,242,246,.55)', fontWeight: 600 }}>완주 과정</span>
+            </div>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
+                <span style={{ fontSize: 26, fontWeight: 800 }}>{p.packagePrice}</span>
+                <span style={{ fontSize: 14.5, color: 'rgba(240,242,246,.4)', fontWeight: 600, textDecoration: 'line-through' }}>
+                  {p.originalPrice}
+                </span>
+                <span
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 800,
+                    color: '#00041A',
+                    background: '#86C3FA',
+                    padding: '3px 9px',
+                    borderRadius: 999,
+                  }}
+                >
+                  {p.duration} 특가
+                </span>
+              </div>
+              <div style={{ marginTop: 6, fontSize: 13.5, color: 'rgba(240,242,246,.55)', fontWeight: 500 }}>
+                {p.monthly} 기준 · 종료 후 연장 시 {p.extendMonthly}
+              </div>
             </div>
             <p style={{ margin: 0, fontSize: 15, lineHeight: 1.55, color: 'rgba(240,242,246,.66)', fontWeight: 500 }}>{p.tagline}</p>
             <ul style={{ margin: '4px 0 0', paddingLeft: 18, fontSize: 13.5, lineHeight: 1.7, color: 'rgba(240,242,246,.55)', fontWeight: 500 }}>
@@ -168,7 +212,7 @@ export default function PricingPlans() {
       </div>
 
       <p style={{ margin: '18px 0 0', fontSize: 14, color: 'rgba(240,242,246,.5)', fontWeight: 500 }}>
-        언제든 업그레이드 · 다운그레이드할 수 있고, 프로젝트가 진행되는 기간 동안만 납부하면 돼요.
+        Spark는 3개월, Growth는 6개월 완주 과정이에요. 기간이 끝난 뒤에는 월 단위로 연장할 수 있어요.
       </p>
 
       {/* 혜택 상세 팝업 */}
@@ -179,9 +223,15 @@ export default function PricingPlans() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={active.icon} alt="" width={42} height={42} aria-hidden style={{ width: 42, height: 42, objectFit: 'contain' }} />
               <div>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-                  <span style={{ fontSize: 30, fontWeight: 800, color: '#86C3FA' }}>{active.price}</span>
-                  <span style={{ fontSize: 15, color: 'rgba(240,242,246,.55)', fontWeight: 600 }}>{active.period}</span>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
+                  <span style={{ fontSize: 28, fontWeight: 800, color: '#86C3FA' }}>{active.duration}</span>
+                  <span style={{ fontSize: 24, fontWeight: 800 }}>{active.packagePrice}</span>
+                  <span style={{ fontSize: 14, color: 'rgba(240,242,246,.4)', fontWeight: 600, textDecoration: 'line-through' }}>
+                    {active.originalPrice}
+                  </span>
+                </div>
+                <div style={{ fontSize: 13.5, color: 'rgba(240,242,246,.55)', fontWeight: 500, marginTop: 2 }}>
+                  {active.monthly} 기준 · 종료 후 연장 시 {active.extendMonthly}
                 </div>
                 <div style={{ fontSize: 14.5, color: 'rgba(240,242,246,.66)', fontWeight: 500, marginTop: 2 }}>{active.tagline}</div>
               </div>
@@ -198,7 +248,7 @@ export default function PricingPlans() {
             </ul>
 
             <div style={{ marginTop: 22, padding: '18px 20px', background: '#07080c', border: '1px solid rgba(255,255,255,.08)', borderRadius: 14 }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: '#86C3FA', marginBottom: 12 }}>납부 · 전환 정책</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: '#86C3FA', marginBottom: 12 }}>기간 · 납부 정책</div>
               <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 9 }}>
                 {POLICIES.map((t) => (
                   <li key={t} style={{ display: 'flex', gap: 10, fontSize: 14, lineHeight: 1.5, color: 'rgba(240,242,246,.7)', fontWeight: 500 }}>
@@ -210,7 +260,7 @@ export default function PricingPlans() {
             </div>
 
             <a
-              href={SITE.links.projectTrack}
+              href={SITE.links.careerTrack}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -224,7 +274,7 @@ export default function PricingPlans() {
                 borderRadius: 12,
               }}
             >
-              프로젝트 트랙 신청하기 →
+              커리어 트랙 신청하기 →
             </a>
           </div>
         )}
