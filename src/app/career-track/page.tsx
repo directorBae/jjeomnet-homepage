@@ -208,6 +208,22 @@ const outcomes: {
   },
 ];
 
+/** 완성된 프로젝트가 쩜넷을 만나기 전 / 후 */
+const beforeAfter = {
+  before: [
+    "폴더 속 코드로 끝나는 프로젝트",
+    "아무도 써 보지 않은 서비스",
+    "이력서에 한 줄로만 남는 경험",
+    "뭘 배웠는지 설명하기 어려운 결과물",
+  ],
+  after: [
+    "도메인이 연결된 라이브 서비스",
+    "실제 사용자의 피드백과 개선 기록",
+    "바닐라쩜넷 데모데이 무대 발표",
+    "레주메·LinkedIn으로 정리된 커리어 스토리",
+  ],
+};
+
 const steps = [
   {
     n: "01",
@@ -1154,11 +1170,153 @@ export default function CareerTrackPage() {
         </div>
       </section>
 
-      {/* 진행 단계 타임라인 */}
+      {/* 비포 애프터 — 완성된 프로젝트가 쩜넷을 만나면 */}
       <section
         style={{
           padding: "clamp(74px,9vw,128px) clamp(20px,5vw,56px)",
           background: "#07080c",
+        }}
+      >
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <h2
+            style={{
+              margin: "0 0 44px",
+              fontSize: "clamp(28px,3.8vw,48px)",
+              fontWeight: 800,
+              letterSpacing: "-.03em",
+              lineHeight: 1.16,
+            }}
+          >
+            완성된 프로젝트가,
+            <br />
+            쩜넷을 만나면.
+          </h2>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,300px),1fr))",
+              gap: 18,
+            }}
+          >
+            {/* BEFORE */}
+            <div
+              style={{
+                background: "#10121a",
+                border: "1px solid rgba(255,255,255,.07)",
+                borderRadius: 18,
+                padding: 34,
+              }}
+            >
+              <div
+                style={{
+                  display: "inline-block",
+                  fontSize: 13,
+                  fontWeight: 800,
+                  letterSpacing: ".1em",
+                  color: "rgba(240,242,246,.4)",
+                  border: "1px solid rgba(255,255,255,.14)",
+                  padding: "5px 12px",
+                  borderRadius: 8,
+                  marginBottom: 22,
+                }}
+              >
+                BEFORE
+              </div>
+              <ul
+                style={{
+                  listStyle: "none",
+                  margin: 0,
+                  padding: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 14,
+                }}
+              >
+                {beforeAfter.before.map((t) => (
+                  <li
+                    key={t}
+                    style={{
+                      display: "flex",
+                      gap: 10,
+                      fontSize: 15.5,
+                      lineHeight: 1.55,
+                      color: "rgba(240,242,246,.55)",
+                      fontWeight: 500,
+                    }}
+                  >
+                    <span aria-hidden style={{ color: "rgba(240,242,246,.35)", fontWeight: 800 }}>
+                      ✕
+                    </span>
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* AFTER */}
+            <div
+              style={{
+                background:
+                  "linear-gradient(180deg,rgba(134,195,250,.1),rgba(134,195,250,.03))",
+                border: "1px solid rgba(134,195,250,.4)",
+                borderRadius: 18,
+                padding: 34,
+              }}
+            >
+              <div
+                style={{
+                  display: "inline-block",
+                  fontSize: 13,
+                  fontWeight: 800,
+                  letterSpacing: ".1em",
+                  color: "#00041A",
+                  background: "#86C3FA",
+                  padding: "5px 12px",
+                  borderRadius: 8,
+                  marginBottom: 22,
+                }}
+              >
+                AFTER
+              </div>
+              <ul
+                style={{
+                  listStyle: "none",
+                  margin: 0,
+                  padding: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 14,
+                }}
+              >
+                {beforeAfter.after.map((t) => (
+                  <li
+                    key={t}
+                    style={{
+                      display: "flex",
+                      gap: 10,
+                      fontSize: 15.5,
+                      lineHeight: 1.55,
+                      color: "#F0F2F6",
+                      fontWeight: 600,
+                    }}
+                  >
+                    <span aria-hidden style={{ color: "#86C3FA", fontWeight: 800 }}>
+                      ✓
+                    </span>
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 진행 단계 타임라인 */}
+      <section
+        style={{
+          padding: "clamp(74px,9vw,128px) clamp(20px,5vw,56px)",
+          background: "#0b0d15",
         }}
       >
         <div style={{ maxWidth: 880, margin: "0 auto" }}>
@@ -1300,7 +1458,7 @@ export default function CareerTrackPage() {
       <section
         style={{
           padding: "clamp(74px,9vw,128px) clamp(20px,5vw,56px)",
-          background: "#0b0d15",
+          background: "#07080c",
         }}
       >
         <div style={{ maxWidth: 1180, margin: "0 auto" }}>
@@ -1404,7 +1562,7 @@ export default function CareerTrackPage() {
         id="pricing"
         style={{
           padding: "clamp(74px,9vw,128px) clamp(20px,5vw,56px)",
-          background: "#07080c",
+          background: "#0b0d15",
         }}
       >
         <div style={{ maxWidth: 1180, margin: "0 auto" }}>
@@ -1493,7 +1651,7 @@ export default function CareerTrackPage() {
       <section
         style={{
           padding: "clamp(74px,9vw,128px) clamp(20px,5vw,56px)",
-          background: "#0b0d15",
+          background: "#07080c",
         }}
       >
         <div style={{ maxWidth: 880, margin: "0 auto" }}>
