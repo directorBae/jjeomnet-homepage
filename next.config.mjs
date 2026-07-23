@@ -12,7 +12,13 @@ const nextConfig = {
   // 2) 이 프로젝트는 iCloud가 동기화하는 ~/Desktop에 있어, 빌드 폴더의 대량
   //    생성·삭제를 fileproviderd가 뒤늦게 재생하며 산출물을 지우는 문제가 있다.
   //    iCloud는 `.nosync` 이름을 동기화에서 제외하므로 빌드 폴더에 적용.
-  distDir: isDevServer ? '.next-dev.nosync' : '.next.nosync',
+  // 단, Vercel은 표준 `.next` 산출 경로를 기대하므로 배포 환경에서는 기본값 사용.
+  distDir:
+    process.env.VERCEL === '1'
+      ? '.next'
+      : isDevServer
+        ? '.next-dev.nosync'
+        : '.next.nosync',
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
