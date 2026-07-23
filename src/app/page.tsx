@@ -4,6 +4,7 @@ import { CtaButtons } from '@/components/Cta';
 import JsonLd from '@/components/JsonLd';
 import EventShowcase from '@/components/EventShowcase';
 import { SITE_URL } from '@/lib/site';
+import { COHORT } from '@/lib/cohort';
 
 export const metadata: Metadata = {
   title: '쩜넷 — 하나의 점이, 우주가 될 때까지',
@@ -30,7 +31,7 @@ const tracks = [
     href: '/career-track',
     n: '02',
     title: '커리어 트랙',
-    desc: '관심사가 커리어가 되도록 — 멘토와 함께 완수하는 3·6개월 트랙.',
+    desc: `관심사가 커리어가 되도록 — 1기 ${COHORT.kickoff} 시작, 멘토와 함께 완주하는 6개월(3개월 옵션) 트랙.`,
   },
   {
     href: '/events',
@@ -152,6 +153,20 @@ export default function HomePage() {
             좋아하는 사람들과 함께, 혼자라면 만들지 못했을 것을
             <br />
             세상에 내보내는 곳. 쩜넷을 소개합니다.
+          </p>
+          <p
+            style={{
+              margin: 0,
+              maxWidth: 640,
+              fontSize: 'clamp(15px,1.5vw,17.5px)',
+              lineHeight: 1.6,
+              color: '#86C3FA',
+              fontWeight: 700,
+            }}
+          >
+            6개월 동안, 내 프로젝트 하나를 배포까지 완주해
+            <br />
+            커리어로 연결하는 실전 프로젝트 커뮤니티.
           </p>
           <CtaButtons />
         </div>
@@ -479,9 +494,10 @@ export default function HomePage() {
             사람들이 모여 있는 곳<span style={{ color: '#86C3FA' }}>.</span>
           </h2>
           <p style={{ margin: 0, fontSize: 17, color: 'rgba(240,242,246,.7)', fontWeight: 500 }}>
-            상시 모집합니다. 디스코드에 들어오면 무료 트랙이 바로 제공되고,
+            커리어 트랙 1기 모집 중 — {COHORT.deadlineFull} 마감 ·{" "}
+            {COHORT.kickoff} 시작 · 6개월 과정.
             <br />
-            Spark · Growth 커리어 트랙 안내도 그 안에서 이루어져요.
+            디스코드 무료 트랙은 언제든 열려 있어요.
           </p>
           <CtaButtons />
         </div>

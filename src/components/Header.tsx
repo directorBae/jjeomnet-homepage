@@ -73,7 +73,7 @@ export default function Header() {
           borderRadius: 999,
         }}
       >
-        커리어 트랙 신청
+        1기 신청하기
       </a>
     </header>
   );

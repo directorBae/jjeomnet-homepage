@@ -9,6 +9,7 @@ import CareerCursorTrail from './CareerCursorTrail';
 
 type Mentor = {
   tag: string;
+  emoji: string;
   age: string;
   domain: string;
   headline: string;
@@ -19,6 +20,7 @@ type Mentor = {
 const MENTORS: Mentor[] = [
   {
     tag: 'A',
+    emoji: '🚀',
     age: '23세',
     domain: '스타트업 · 창업',
     headline: '네이버·당근·레브잇 동시 오퍼',
@@ -27,11 +29,11 @@ const MENTORS: Mentor[] = [
       '스타트업 개발자 커리어로 0원 → 연 8천만원',
       '시리즈 A 스타트업 거쳐 직접 창업',
       '해커톤·창업대회 장관상 다수',
-      'Growth의 LinkedIn 커리어 코칭 담당',
     ],
   },
   {
     tag: 'B',
+    emoji: '🎨',
     age: '24세',
     domain: '디자인 · 기획',
     headline: '한예종 → UIUC 경영 석사',
@@ -44,8 +46,9 @@ const MENTORS: Mentor[] = [
   },
   {
     tag: 'C',
+    emoji: '🤖',
     age: '25세',
-    domain: 'AI 연구',
+    domain: 'AI 연구 취업',
     headline: 'World Model 연구로 S전자 취업',
     color: '#5EF479',
     items: [
@@ -56,6 +59,7 @@ const MENTORS: Mentor[] = [
   },
   {
     tag: 'D',
+    emoji: '📄',
     age: '23세',
     domain: '연구 · 논문',
     headline: '1티어 학회 논문 게재',
@@ -67,6 +71,7 @@ const MENTORS: Mentor[] = [
   },
   {
     tag: 'E',
+    emoji: '🏭',
     age: '22세',
     domain: '스타트업 · 취업',
     headline: 'P철강 취업 성공',
@@ -118,10 +123,10 @@ export default function MentorShowcase({ extra }: { extra?: React.ReactNode }) {
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontWeight: 800,
-                fontSize: 20,
+                fontSize: 24,
               }}
             >
-              {m.tag}
+              <span aria-hidden>{m.emoji}</span>
             </div>
             <div>
               <div style={{ fontSize: 14.5, fontWeight: 700, color: m.color }}>{m.domain}</div>

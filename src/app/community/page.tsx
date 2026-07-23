@@ -5,6 +5,7 @@ import JsonLd from "@/components/JsonLd";
 import MentorShowcase from "@/components/MentorShowcase";
 import Faq from "@/components/Faq";
 import { SITE, SITE_URL } from "@/lib/site";
+import { COHORT } from "@/lib/cohort";
 
 export const metadata: Metadata = {
   title: "커뮤니티",
@@ -83,7 +84,7 @@ const faqs = [
   },
   {
     q: "커리어 트랙은 어떻게 신청하나요?",
-    a: "커리어 트랙 페이지에서 진행 과정과 요금제를 확인하고, 신청 폼으로 신청하면 돼요. 멘토와 함께 Spark 3개월 · Growth 6개월 과정으로 커리어를 만드는 프로그램입니다.",
+    a: `커리어 트랙 페이지에서 진행 과정과 요금제를 확인하고, 신청 폼으로 신청하면 돼요. 기수제로 운영되며 1기는 ${COHORT.kickoff} 시작 · 6개월 과정(3개월 옵션)이고, 모집은 ${COHORT.deadlineFull}에 마감됩니다. 커뮤니티 입장은 기수와 무관하게 언제나 무료예요.`,
   },
 ];
 
@@ -398,7 +399,8 @@ export default function CommunityPage() {
                 }}
               >
                 멘토와 함께 커리어를 만드는 Spark·Growth 트랙, 커뮤니티
-                멤버에게 참여 자격이 열려요.
+                멤버에게 참여 자격이 열려요. 1기 모집은 {COHORT.deadlineFull}{" "}
+                마감이에요.
               </p>
               <span
                 style={{
@@ -448,7 +450,11 @@ export default function CommunityPage() {
           >
             취업, 창업을 위한 시장 조사 — 분명한 목적 위에서 멘토와 함께
             커리어를 만드는 프로그램이에요. 첫 기획 미팅에서 방향과 일정을
-            함께 잡고, 배포와 데모데이까지 갑니다.
+            함께 잡고, 배포와 데모데이까지 갑니다.{" "}
+            <span style={{ color: "#86C3FA", fontWeight: 700 }}>
+              {COHORT.label}는 {COHORT.kickoff}에 시작하고, 모집은{" "}
+              {COHORT.deadlineFull}에 마감돼요.
+            </span>
           </p>
           <div
             style={{
@@ -492,7 +498,8 @@ export default function CommunityPage() {
                   fontWeight: 500,
                 }}
               >
-                아이디어에 불을 붙여, 3개월 안에 실제 배포까지.
+                아이디어에 불을 붙여, 실제 배포까지 — 첫 완주를 노리는
+                1~2학년, 군입대 등 일정이 정해진 분 추천.
               </p>
             </Link>
             <Link
@@ -530,7 +537,8 @@ export default function CommunityPage() {
                   fontWeight: 500,
                 }}
               >
-                6개월 동안 수익·시장 탐색·커리어까지. (Spark 포함)
+                6개월 동안 수익·시장 탐색·커리어까지 — 취업을 앞둔 3~4학년
+                추천. (Spark 포함)
               </p>
             </Link>
           </div>
@@ -830,8 +838,8 @@ export default function CommunityPage() {
                     fontWeight: 500,
                   }}
                 >
-                  커뮤니티 멤버라면 누구나 Spark·Growth 트랙에 참여할 수
-                  있어요. 자세한 과정은{" "}
+                  커뮤니티 멤버라면 누구나 1기 트랙(Spark·Growth)에 신청할 수
+                  있어요. 모집은 {COHORT.deadlineFull} 마감 — 자세한 과정은{" "}
                   <Link
                     href="/career-track"
                     style={{

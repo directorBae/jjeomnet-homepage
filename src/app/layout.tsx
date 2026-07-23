@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { freesentation } from './fonts';
+import AnnouncementBar from '@/components/AnnouncementBar';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import MobileCTA from '@/components/MobileCTA';
@@ -103,6 +104,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             overflowX: 'hidden',
           }}
         >
+          <AnnouncementBar />
           <Header />
           <main>{children}</main>
           <Footer />

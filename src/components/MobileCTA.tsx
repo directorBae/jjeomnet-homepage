@@ -34,7 +34,7 @@ export default function MobileCTA() {
           borderRadius: 12,
         }}
       >
-        커리어 트랙 신청 →
+        커리어 트랙 1기 신청 →
       </a>
     </div>
   );
