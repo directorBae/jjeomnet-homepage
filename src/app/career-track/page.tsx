@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CtaButtons } from "@/components/Cta";
 import JsonLd from "@/components/JsonLd";
 import CountdownTimer from "@/components/CountdownTimer";
+import CursorGlowSection from "@/components/CursorGlowSection";
 import ReviewMarquee from "@/components/ReviewMarquee";
 import MentorShowcase from "@/components/MentorShowcase";
 import PricingPlans from "@/components/PricingPlans";
@@ -163,7 +164,14 @@ const outcomes: {
     chip: "실물",
     color: "#86C3FA",
     title: "Resume / CV.",
-    desc: "프로젝트에서 뭘 배웠고 왜 이 프로젝트를 했는지 — 여러분이 목표하는 기업이 좋아할 만한 방향으로, 멘토와 함께 레주메를 작성해 줘요.",
+    desc: (
+      <>
+        멘토와 함께 작성하는 레주메,
+        <br />
+        기업이 좋아할 만한 방향으로 여러분의 프로젝트를 설명하는 레주메를
+        함께 작성해 줘요.
+      </>
+    ),
     img: "/images/portfolio.png",
     fade: "vertical",
   },
@@ -208,20 +216,26 @@ const outcomes: {
   },
 ];
 
-/** 완성된 프로젝트가 쩜넷을 만나기 전 / 후 */
+/** 비포 애프터 — 실제 사례: ClubU 프로젝트 */
 const beforeAfter = {
-  before: [
-    "폴더 속 코드로 끝나는 프로젝트",
-    "아무도 써 보지 않은 서비스",
-    "이력서에 한 줄로만 남는 경험",
-    "뭘 배웠는지 설명하기 어려운 결과물",
-  ],
-  after: [
-    "도메인이 연결된 라이브 서비스",
-    "실제 사용자의 피드백과 개선 기록",
-    "바닐라쩜넷 데모데이 무대 발표",
-    "레주메·LinkedIn으로 정리된 커리어 스토리",
-  ],
+  project: "ClubU",
+  before: {
+    label: "동아리 프로젝트였을 때",
+    items: [
+      "동아리 지원을 받고, 합격/불합격을 처리하는 기능 아이디어",
+      "동아리 안에서만 쓰고 끝날 뻔한 프로젝트",
+    ],
+  },
+  after: {
+    label: "쩜넷을 만난 후",
+    items: [
+      "체계적인 유저 권한 관리 설계",
+      "실제 학교 내 시장 조사와 인터뷰를 통한 제품 설계·구현",
+      "에러 레벨 정의와 QA 진행",
+      "실제 학생들이 사용하는 프로젝트로",
+    ],
+    highlight: "그리고 이 프로젝트로, 표창 수여 🏆",
+  },
 };
 
 const steps = [
@@ -871,7 +885,7 @@ export default function CareerTrackPage() {
       </section>
 
       {/* 프로그램 소개 — 멘토 · 동료 · 커리어 세 가지 축 */}
-      <section
+      <CursorGlowSection
         style={{
           padding: "clamp(74px,9vw,128px) clamp(20px,5vw,56px)",
           background: "#0b0d15",
@@ -940,7 +954,6 @@ export default function CareerTrackPage() {
                 <p
                   style={{
                     margin: 0,
-                    maxWidth: 720,
                     fontSize: "clamp(16px,1.9vw,20px)",
                     lineHeight: 1.7,
                     color: "rgba(240,242,246,.7)",
@@ -953,7 +966,7 @@ export default function CareerTrackPage() {
             ))}
           </div>
         </div>
-      </section>
+      </CursorGlowSection>
 
       {/* 시작하면 무엇부터 — 전담 멘토 배정 · 멘토진 */}
       <section
@@ -1040,11 +1053,226 @@ export default function CareerTrackPage() {
         </div>
       </section>
 
+      {/* 비포 애프터 — 완성된 프로젝트가 쩜넷을 만나면 */}
+      <section
+        style={{
+          position: "relative",
+          overflow: "hidden",
+          isolation: "isolate",
+          padding: "clamp(74px,9vw,128px) clamp(20px,5vw,56px)",
+          background: "#0b0d15",
+        }}
+      >
+        {/* ClubU 화면 — 상단에 깔리고 아래로 갈수록 투명하게 사라짐 */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: "min(78vw, 720px)",
+            zIndex: -1,
+            background: `linear-gradient(180deg, rgba(11,13,21,.78), rgba(11,13,21,.42) 45%, rgba(11,13,21,.66) 100%), url("/images/clubu.png") center 24% / cover no-repeat`,
+            maskImage:
+              "linear-gradient(180deg, #000 0%, #000 42%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(180deg, #000 0%, #000 42%, transparent 100%)",
+          }}
+        />
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <h2
+            style={{
+              margin: "0 0 18px",
+              fontSize: "clamp(28px,3.8vw,48px)",
+              fontWeight: 800,
+              letterSpacing: "-.03em",
+              lineHeight: 1.16,
+            }}
+          >
+            완성된 프로젝트가,
+            <br />
+            쩜넷을 만나면.
+          </h2>
+          <p
+            style={{
+              margin: "0 0 44px",
+              maxWidth: 640,
+              fontSize: 16.5,
+              lineHeight: 1.6,
+              color: "rgba(240,242,246,.64)",
+              fontWeight: 500,
+            }}
+          >
+            실제 참여 팀의 이야기예요 — 동아리 관리 서비스{" "}
+            <span style={{ color: "#86C3FA", fontWeight: 700 }}>
+              {beforeAfter.project}
+            </span>
+            .
+          </p>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,300px),1fr))",
+              gap: 18,
+            }}
+          >
+            {/* BEFORE — 유리 카드 */}
+            <div
+              style={{
+                background: "rgba(13,15,22,.5)",
+                border: "1px solid rgba(255,255,255,.14)",
+                borderRadius: 18,
+                padding: 34,
+                backdropFilter: "blur(16px) saturate(1.2)",
+                WebkitBackdropFilter: "blur(16px) saturate(1.2)",
+              }}
+            >
+              <div
+                style={{
+                  display: "inline-block",
+                  fontSize: 13,
+                  fontWeight: 800,
+                  letterSpacing: ".1em",
+                  color: "rgba(240,242,246,.4)",
+                  border: "1px solid rgba(255,255,255,.14)",
+                  padding: "5px 12px",
+                  borderRadius: 8,
+                  marginBottom: 14,
+                }}
+              >
+                BEFORE
+              </div>
+              <div
+                style={{
+                  fontSize: 17.5,
+                  fontWeight: 800,
+                  letterSpacing: "-.01em",
+                  color: "rgba(240,242,246,.75)",
+                  marginBottom: 18,
+                }}
+              >
+                {beforeAfter.before.label}
+              </div>
+              <ul
+                style={{
+                  listStyle: "none",
+                  margin: 0,
+                  padding: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 14,
+                }}
+              >
+                {beforeAfter.before.items.map((t) => (
+                  <li
+                    key={t}
+                    style={{
+                      display: "flex",
+                      gap: 10,
+                      fontSize: 15.5,
+                      lineHeight: 1.55,
+                      color: "rgba(240,242,246,.55)",
+                      fontWeight: 500,
+                    }}
+                  >
+                    <span aria-hidden style={{ color: "rgba(240,242,246,.35)", fontWeight: 800 }}>
+                      ✕
+                    </span>
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* AFTER — 유리 카드 */}
+            <div
+              style={{
+                background: "rgba(134,195,250,.09)",
+                border: "1px solid rgba(134,195,250,.45)",
+                borderRadius: 18,
+                padding: 34,
+                backdropFilter: "blur(16px) saturate(1.2)",
+                WebkitBackdropFilter: "blur(16px) saturate(1.2)",
+              }}
+            >
+              <div
+                style={{
+                  display: "inline-block",
+                  fontSize: 13,
+                  fontWeight: 800,
+                  letterSpacing: ".1em",
+                  color: "#00041A",
+                  background: "#86C3FA",
+                  padding: "5px 12px",
+                  borderRadius: 8,
+                  marginBottom: 14,
+                }}
+              >
+                AFTER
+              </div>
+              <div
+                style={{
+                  fontSize: 17.5,
+                  fontWeight: 800,
+                  letterSpacing: "-.01em",
+                  marginBottom: 18,
+                }}
+              >
+                {beforeAfter.after.label}
+              </div>
+              <ul
+                style={{
+                  listStyle: "none",
+                  margin: 0,
+                  padding: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 14,
+                }}
+              >
+                {beforeAfter.after.items.map((t) => (
+                  <li
+                    key={t}
+                    style={{
+                      display: "flex",
+                      gap: 10,
+                      fontSize: 15.5,
+                      lineHeight: 1.55,
+                      color: "#F0F2F6",
+                      fontWeight: 600,
+                    }}
+                  >
+                    <span aria-hidden style={{ color: "#86C3FA", fontWeight: 800 }}>
+                      ✓
+                    </span>
+                    {t}
+                  </li>
+                ))}
+              </ul>
+              <p
+                style={{
+                  margin: "22px 0 0",
+                  paddingTop: 18,
+                  borderTop: "1px solid rgba(134,195,250,.25)",
+                  fontSize: "clamp(16px,1.9vw,19px)",
+                  fontWeight: 800,
+                  letterSpacing: "-.01em",
+                  color: "#86C3FA",
+                }}
+              >
+                {beforeAfter.after.highlight}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 6개월 후 남는 것 */}
       <section
         style={{
           padding: "clamp(74px,9vw,128px) clamp(20px,5vw,56px)",
-          background: "#0b0d15",
+          background: "#07080c",
         }}
       >
         <div style={{ maxWidth: 1180, margin: "0 auto" }}>
@@ -1166,148 +1394,6 @@ export default function CareerTrackPage() {
               </div>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* 비포 애프터 — 완성된 프로젝트가 쩜넷을 만나면 */}
-      <section
-        style={{
-          padding: "clamp(74px,9vw,128px) clamp(20px,5vw,56px)",
-          background: "#07080c",
-        }}
-      >
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <h2
-            style={{
-              margin: "0 0 44px",
-              fontSize: "clamp(28px,3.8vw,48px)",
-              fontWeight: 800,
-              letterSpacing: "-.03em",
-              lineHeight: 1.16,
-            }}
-          >
-            완성된 프로젝트가,
-            <br />
-            쩜넷을 만나면.
-          </h2>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,300px),1fr))",
-              gap: 18,
-            }}
-          >
-            {/* BEFORE */}
-            <div
-              style={{
-                background: "#10121a",
-                border: "1px solid rgba(255,255,255,.07)",
-                borderRadius: 18,
-                padding: 34,
-              }}
-            >
-              <div
-                style={{
-                  display: "inline-block",
-                  fontSize: 13,
-                  fontWeight: 800,
-                  letterSpacing: ".1em",
-                  color: "rgba(240,242,246,.4)",
-                  border: "1px solid rgba(255,255,255,.14)",
-                  padding: "5px 12px",
-                  borderRadius: 8,
-                  marginBottom: 22,
-                }}
-              >
-                BEFORE
-              </div>
-              <ul
-                style={{
-                  listStyle: "none",
-                  margin: 0,
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 14,
-                }}
-              >
-                {beforeAfter.before.map((t) => (
-                  <li
-                    key={t}
-                    style={{
-                      display: "flex",
-                      gap: 10,
-                      fontSize: 15.5,
-                      lineHeight: 1.55,
-                      color: "rgba(240,242,246,.55)",
-                      fontWeight: 500,
-                    }}
-                  >
-                    <span aria-hidden style={{ color: "rgba(240,242,246,.35)", fontWeight: 800 }}>
-                      ✕
-                    </span>
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* AFTER */}
-            <div
-              style={{
-                background:
-                  "linear-gradient(180deg,rgba(134,195,250,.1),rgba(134,195,250,.03))",
-                border: "1px solid rgba(134,195,250,.4)",
-                borderRadius: 18,
-                padding: 34,
-              }}
-            >
-              <div
-                style={{
-                  display: "inline-block",
-                  fontSize: 13,
-                  fontWeight: 800,
-                  letterSpacing: ".1em",
-                  color: "#00041A",
-                  background: "#86C3FA",
-                  padding: "5px 12px",
-                  borderRadius: 8,
-                  marginBottom: 22,
-                }}
-              >
-                AFTER
-              </div>
-              <ul
-                style={{
-                  listStyle: "none",
-                  margin: 0,
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 14,
-                }}
-              >
-                {beforeAfter.after.map((t) => (
-                  <li
-                    key={t}
-                    style={{
-                      display: "flex",
-                      gap: 10,
-                      fontSize: 15.5,
-                      lineHeight: 1.55,
-                      color: "#F0F2F6",
-                      fontWeight: 600,
-                    }}
-                  >
-                    <span aria-hidden style={{ color: "#86C3FA", fontWeight: 800 }}>
-                      ✓
-                    </span>
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
         </div>
       </section>

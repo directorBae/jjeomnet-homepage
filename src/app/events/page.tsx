@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import NoiseHoverImage from '@/components/NoiseHoverImage';
-import { CtaButtons } from '@/components/Cta';
 import JsonLd from '@/components/JsonLd';
 import { EVENTS } from '@/lib/events';
 import { SITE_URL } from '@/lib/site';
@@ -135,28 +134,6 @@ export default function EventsPage() {
         </section>
       ))}
 
-      {/* CTA */}
-      <section
-        style={{
-          position: 'relative',
-          overflow: 'hidden',
-          padding: 'clamp(80px,10vw,150px) clamp(20px,5vw,56px)',
-          textAlign: 'center',
-          isolation: 'isolate',
-        }}
-      >
-        <div aria-hidden style={{ position: 'absolute', inset: 0, background: `url("/images/hero-bg.jpg") center / cover no-repeat`, zIndex: -2 }} />
-        <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'radial-gradient(100% 100% at 50% 50%, rgba(7,8,12,.6), #07080c 78%)', zIndex: -1 }} />
-        <div style={{ maxWidth: 760, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
-          <h2 style={{ margin: 0, fontSize: 'clamp(28px,4vw,50px)', fontWeight: 800, lineHeight: 1.2, letterSpacing: '-.03em' }}>
-            다음 행사에서, 만나요<span style={{ color: '#86C3FA' }}>.</span>
-          </h2>
-          <p style={{ margin: 0, fontSize: 16.5, color: 'rgba(240,242,246,.7)', fontWeight: 500 }}>
-            디스코드에 다음 행사 공지가 올라옵니다. 커뮤니티로 들어오세요.
-          </p>
-          <CtaButtons fontSize={16.5} />
-        </div>
-      </section>
     </>
   );
 }

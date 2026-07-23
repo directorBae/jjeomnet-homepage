@@ -56,7 +56,7 @@ const PLANS: Plan[] = [
     originalPrice: '₩419,400',
     extendMonthly: '월 ₩69,900',
     icon: '/images/icon-growth.svg',
-    tagline: '수익·시장 탐색·커리어로 성장. (Spark 포함)',
+    tagline: '프로젝트에서 실전 커리어로.',
     recommend: '취업을 앞둔 3~4학년 추천',
     highlights: ['Spark의 모든 혜택 포함', 'LinkedIn 커리어 코칭 — 규모 키우기', '멘토링 세션 · 2주 1회'],
     features: [
