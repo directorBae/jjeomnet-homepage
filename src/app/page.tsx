@@ -5,6 +5,8 @@ import JsonLd from '@/components/JsonLd';
 import EventShowcase from '@/components/EventShowcase';
 import { SITE_URL } from '@/lib/site';
 import { COHORT } from '@/lib/cohort';
+import ScrollReveal from '@/components/ScrollReveal';
+import SlotNumber from '@/components/SlotNumber';
 
 export const metadata: Metadata = {
   title: '쩜넷 — 하나의 점이, 우주가 될 때까지',
@@ -209,62 +211,68 @@ export default function HomePage() {
               gap: 18,
             }}
           >
-            <div
-              style={{
-                background: '#10121a',
-                border: '1px solid rgba(255,255,255,.07)',
-                borderRadius: 18,
-                padding: 34,
-              }}
-            >
+            <ScrollReveal>
               <div
                 style={{
-                  display: 'inline-block',
-                  fontSize: 13,
-                  fontWeight: 800,
-                  letterSpacing: '.1em',
-                  color: 'rgba(240,242,246,.4)',
-                  border: '1px solid rgba(255,255,255,.14)',
-                  padding: '5px 12px',
-                  borderRadius: 8,
-                  marginBottom: 20,
+                  height: '100%',
+                  background: '#10121a',
+                  border: '1px solid rgba(255,255,255,.07)',
+                  borderRadius: 18,
+                  padding: 34,
                 }}
               >
-                NOT
+                <div
+                  style={{
+                    display: 'inline-block',
+                    fontSize: 13,
+                    fontWeight: 800,
+                    letterSpacing: '.1em',
+                    color: 'rgba(240,242,246,.4)',
+                    border: '1px solid rgba(255,255,255,.14)',
+                    padding: '5px 12px',
+                    borderRadius: 8,
+                    marginBottom: 20,
+                  }}
+                >
+                  NOT
+                </div>
+                <p style={{ margin: 0, fontSize: 21, lineHeight: 1.5, fontWeight: 500, color: 'rgba(240,242,246,.62)' }}>
+                  쩜넷은 강의도, 스터디도 아닙니다.
+                  <br />
+                  정해진 커리큘럼을 따라가는 곳이 아닙니다.
+                </p>
               </div>
-              <p style={{ margin: 0, fontSize: 21, lineHeight: 1.5, fontWeight: 500, color: 'rgba(240,242,246,.62)' }}>
-                쩜넷은 강의도, 스터디도 아닙니다.
-                <br />
-                정해진 커리큘럼을 따라가는 곳이 아닙니다.
-              </p>
-            </div>
-            <div
-              style={{
-                background: 'linear-gradient(180deg,rgba(134,195,250,.1),rgba(134,195,250,.03))',
-                border: '1px solid rgba(134,195,250,.4)',
-                borderRadius: 18,
-                padding: 34,
-              }}
-            >
+            </ScrollReveal>
+            <ScrollReveal delay={150}>
               <div
                 style={{
-                  display: 'inline-block',
-                  fontSize: 13,
-                  fontWeight: 800,
-                  letterSpacing: '.1em',
-                  color: '#00041A',
-                  background: '#86C3FA',
-                  padding: '5px 12px',
-                  borderRadius: 8,
-                  marginBottom: 20,
+                  height: '100%',
+                  background: 'linear-gradient(180deg,rgba(134,195,250,.1),rgba(134,195,250,.03))',
+                  border: '1px solid rgba(134,195,250,.4)',
+                  borderRadius: 18,
+                  padding: 34,
                 }}
               >
-                BUT
+                <div
+                  style={{
+                    display: 'inline-block',
+                    fontSize: 13,
+                    fontWeight: 800,
+                    letterSpacing: '.1em',
+                    color: '#00041A',
+                    background: '#86C3FA',
+                    padding: '5px 12px',
+                    borderRadius: 8,
+                    marginBottom: 20,
+                  }}
+                >
+                  BUT
+                </div>
+                <p style={{ margin: 0, fontSize: 21, lineHeight: 1.5, fontWeight: 600, color: '#F0F2F6' }}>
+                  함께 만들고, 배포하고, 제안하고, 실험하는 커뮤니티입니다.
+                </p>
               </div>
-              <p style={{ margin: 0, fontSize: 21, lineHeight: 1.5, fontWeight: 600, color: '#F0F2F6' }}>
-                함께 만들고, 배포하고, 제안하고, 실험하는 커뮤니티입니다.
-              </p>
-            </div>
+            </ScrollReveal>
           </div>
           <p
             style={{
@@ -307,12 +315,12 @@ export default function HomePage() {
               gap: 18,
             }}
           >
-            {tracks.map((t) => (
+            {tracks.map((t, i) => (
+              <ScrollReveal key={t.href} delay={i * 120}>
               <Link
-                key={t.href}
                 href={t.href}
                 className="card-link"
-                style={{ display: 'block', background: '#11131d', borderRadius: 20, padding: 34 }}
+                style={{ display: 'block', height: '100%', background: '#11131d', borderRadius: 20, padding: 34 }}
               >
                 <div style={{ fontSize: 14, fontWeight: 800, color: '#86C3FA', letterSpacing: '.04em' }}>{t.n}</div>
                 <div style={{ fontSize: 25, fontWeight: 800, margin: '14px 0 12px', letterSpacing: '-.02em' }}>
@@ -323,6 +331,7 @@ export default function HomePage() {
                 </p>
                 <span style={{ fontSize: 14.5, fontWeight: 700, color: '#86C3FA' }}>자세히 보기 →</span>
               </Link>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -355,13 +364,16 @@ export default function HomePage() {
             }}
           >
             {[
-              { num: '300', unit: '명+', label: '함께 모인 사람' },
-              { num: '12', unit: '회', label: '진행한 행사' },
-              { num: '20', unit: '개+', label: '동아리 네트워크로 확장 중' },
-            ].map((s) => (
-              <div
-                key={s.label}
-                style={{ background: '#11131d', border: '1px solid rgba(255,255,255,.07)', borderRadius: 18, padding: 30 }}
+              { num: '500', unit: '명+', label: '함께 모인 사람', href: '/events' },
+              { num: '15', unit: '회+', label: '진행한 행사', href: '/events' },
+              { num: '5', unit: '개+', label: '함께 완성한 프로젝트', href: '/career-track' },
+              { num: '20', unit: '개+', label: '동아리 네트워크로 확장 중', href: '/community' },
+            ].map((s, i) => (
+              <ScrollReveal key={s.label} delay={i * 100}>
+              <Link
+                href={s.href}
+                className="card-link"
+                style={{ display: 'block', height: '100%', background: '#11131d', borderRadius: 18, padding: 30 }}
               >
                 <div
                   style={{
@@ -372,11 +384,12 @@ export default function HomePage() {
                     lineHeight: 1,
                   }}
                 >
-                  {s.num}
+                  <SlotNumber value={s.num} />
                   <span style={{ fontSize: '.5em' }}>{s.unit}</span>
                 </div>
                 <div style={{ marginTop: 10, fontSize: 15, color: 'rgba(240,242,246,.6)', fontWeight: 600 }}>{s.label}</div>
-              </div>
+              </Link>
+              </ScrollReveal>
             ))}
           </div>
 
@@ -436,8 +449,9 @@ export default function HomePage() {
               gap: 34,
             }}
           >
-            {purpose.map((p) => (
-              <div key={p.n}>
+            {purpose.map((p, i) => (
+              <ScrollReveal key={p.n} delay={i * 120}>
+              <div>
                 <div style={{ fontSize: 15, fontWeight: 800, color: '#86C3FA' }}>{p.n}</div>
                 <div style={{ height: 1, background: 'rgba(255,255,255,.12)', margin: '16px 0 18px' }} />
                 <div style={{ fontSize: 21, fontWeight: 800, marginBottom: 12 }}>{p.title}</div>
@@ -445,6 +459,7 @@ export default function HomePage() {
                   {p.desc}
                 </p>
               </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>

@@ -6,6 +6,7 @@ import MentorShowcase from "@/components/MentorShowcase";
 import Faq from "@/components/Faq";
 import { SITE, SITE_URL } from "@/lib/site";
 import { COHORT } from "@/lib/cohort";
+import ScrollReveal from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "커뮤니티",
@@ -267,7 +268,7 @@ export default function CommunityPage() {
               gap: 16,
             }}
           >
-            {benefits.map((b) => {
+            {benefits.map((b, i) => {
               const inner = (
                 <>
                   <span
@@ -321,42 +322,48 @@ export default function CommunityPage() {
                   )}
                 </>
               );
-              return b.href ? (
-                <Link
-                  key={b.title}
-                  href={b.href}
-                  className="card-link"
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    background: "#11131d",
-                    borderRadius: 18,
-                    padding: 28,
-                  }}
-                >
-                  {inner}
-                </Link>
-              ) : (
-                <div
-                  key={b.title}
-                  style={{
-                    background: "#11131d",
-                    border: "1px solid rgba(255,255,255,.07)",
-                    borderRadius: 18,
-                    padding: 28,
-                  }}
-                >
-                  {inner}
-                </div>
+              return (
+                <ScrollReveal key={b.title} delay={i * 80}>
+                  {b.href ? (
+                    <Link
+                      href={b.href}
+                      className="card-link"
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        height: "100%",
+                        background: "#11131d",
+                        borderRadius: 18,
+                        padding: 28,
+                      }}
+                    >
+                      {inner}
+                    </Link>
+                  ) : (
+                    <div
+                      style={{
+                        height: "100%",
+                        background: "#11131d",
+                        border: "1px solid rgba(255,255,255,.07)",
+                        borderRadius: 18,
+                        padding: 28,
+                      }}
+                    >
+                      {inner}
+                    </div>
+                  )}
+                </ScrollReveal>
               );
             })}
             {/* 커리어 트랙 참여권 — 트랙 페이지로 연결되는 카드 */}
+            <ScrollReveal delay={benefits.length * 80}>
             <Link
               href="/career-track"
               className="card-link"
               style={{
                 display: "flex",
                 flexDirection: "column",
+                height: "100%",
                 background:
                   "linear-gradient(160deg,rgba(165,148,247,.14),#11131d)",
                 borderColor: "rgba(165,148,247,.36)",
@@ -413,6 +420,7 @@ export default function CommunityPage() {
                 자세히 보기 →
               </span>
             </Link>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -465,11 +473,13 @@ export default function CommunityPage() {
               marginBottom: 28,
             }}
           >
+            <ScrollReveal>
             <Link
               href="/career-track"
               className="card-link"
               style={{
                 display: "block",
+                height: "100%",
                 background: "#11131d",
                 borderRadius: 18,
                 padding: 28,
@@ -499,14 +509,17 @@ export default function CommunityPage() {
                 }}
               >
                 아이디어에 불을 붙여, 실제 배포까지 — 첫 완주를 노리는
-                1~2학년, 군입대 등 일정이 정해진 분 추천.
+                분들께 추천.
               </p>
             </Link>
+            </ScrollReveal>
+            <ScrollReveal delay={140}>
             <Link
               href="/career-track"
               className="card-link"
               style={{
                 display: "block",
+                height: "100%",
                 background:
                   "linear-gradient(180deg,rgba(134,195,250,.09),#11131d)",
                 borderColor: "rgba(134,195,250,.32)",
@@ -537,10 +550,11 @@ export default function CommunityPage() {
                   fontWeight: 500,
                 }}
               >
-                6개월 동안 수익·시장 탐색·커리어까지 — 취업을 앞둔 3~4학년
-                추천. (Spark 포함)
+                프로젝트에서 실전 커리어로 — 취·창업 등 실전 커리어가 필요한
+                분 추천. (Spark 포함)
               </p>
             </Link>
+            </ScrollReveal>
           </div>
           <Link
             href="/career-track"

@@ -5,7 +5,11 @@ import JsonLd from "@/components/JsonLd";
 import CountdownTimer from "@/components/CountdownTimer";
 import CursorGlowSection from "@/components/CursorGlowSection";
 import ReviewMarquee from "@/components/ReviewMarquee";
+import ScrollReveal from "@/components/ScrollReveal";
+import SlotNumber from "@/components/SlotNumber";
+import BlurReveal from "@/components/BlurReveal";
 import MentorShowcase from "@/components/MentorShowcase";
+import NetworkGraph from "@/components/NetworkGraph";
 import PricingPlans from "@/components/PricingPlans";
 import Faq from "@/components/Faq";
 import { SITE, SITE_URL } from "@/lib/site";
@@ -115,7 +119,18 @@ const pillars: {
     n: "03",
     color: "#FFBABA",
     title: "뛰어난 커리어로 만들어요.",
-    desc: "데모데이를 실행하고, 링크드인 꾸미기부터 목표 방향에 맞춘 커리어 설계, 취업·창업 같은 다음 스텝까지 멘토가 함께합니다.",
+    desc: (
+      <>
+        <span style={{ color: "#F0F2F6", fontWeight: 800 }}>데모데이</span>를
+        실행하고,{" "}
+        <span style={{ color: "#F0F2F6", fontWeight: 800 }}>
+          링크드인 꾸미기
+        </span>
+        부터 목표 방향에 맞춘{" "}
+        <span style={{ color: "#F0F2F6", fontWeight: 800 }}>커리어 설계</span>,
+        취업·창업 같은 다음 스텝까지 멘토가 함께합니다.
+      </>
+    ),
   },
 ];
 
@@ -159,6 +174,10 @@ const outcomes: {
   desc: React.ReactNode;
   img: string;
   fade: "vertical" | "horizontal";
+  /** 세로형 배경 이미지의 가로/세로 비율 — 네트워크 그래프가 사진을 침범하지 않게 폭 계산에 사용 */
+  imgAspect?: number;
+  /** 사진 위쪽을 잘라낼 표시 픽셀 수 */
+  cropTop?: number;
 }[] = [
   {
     chip: "실물",
@@ -172,16 +191,18 @@ const outcomes: {
         함께 작성해 줘요.
       </>
     ),
-    img: "/images/portfolio.png",
+    img: "/images/portfolio.jpg",
     fade: "vertical",
+    imgAspect: 1574 / 1518,
   },
   {
     chip: "커리어",
     color: "#A594F7",
     title: "완성된 LinkedIn 프로필",
     desc: "여러분의 활동이 담긴 LinkedIn 프로필을 멘토와 함께 작성하고, 아티클 쓰는 법과 1촌 맺는 법까지 가르쳐 줘요.",
-    img: "/images/linkedin.png",
+    img: "/images/linkedin.jpg",
     fade: "vertical",
+    imgAspect: 1650 / 1454,
   },
   {
     chip: "무대",
@@ -205,14 +226,17 @@ const outcomes: {
     ),
     img: "/images/vanilla.jpg",
     fade: "horizontal",
+    imgAspect: 1600 / 1200,
   },
   {
     chip: "시장",
     color: "#5EF479",
     title: "고객 탐색",
     desc: "예비 고객군을 만나 인터뷰를 진행하고, 멘토가 인터뷰 진행까지 함께 도와줘요.",
-    img: "/images/interview.png",
+    img: "/images/interview.jpg",
     fade: "horizontal",
+    imgAspect: 1600 / 872,
+    cropTop: 100,
   },
 ];
 
@@ -229,10 +253,30 @@ const beforeAfter = {
   after: {
     label: "쩜넷을 만난 후",
     items: [
-      "체계적인 유저 권한 관리 설계",
-      "실제 학교 내 시장 조사와 인터뷰를 통한 제품 설계·구현",
-      "에러 레벨 정의와 QA 진행",
-      "실제 학생들이 사용하는 프로젝트로",
+      {
+        text: "체계적인 유저 권한 관리 설계",
+        img: "/images/useraccessconduct.jpg",
+        pos: "center top",
+        caption: "비로그인부터 동아리 간부까지, 권한별 기능을 정의한 설계 문서",
+      },
+      {
+        text: "실제 학교 내 시장 조사와 인터뷰를 통한 제품 설계·구현",
+        img: "/images/clubu-interview.jpg",
+        pos: "center",
+        caption: "교내 학생·동아리 운영진과 진행한 실제 인터뷰 현장",
+      },
+      {
+        text: "에러 레벨 정의와 QA 진행",
+        img: "/images/qabugs.jpg",
+        pos: "center top",
+        caption: "P0/P1/P2 에러 레벨을 정의하고 항목별로 검증한 QA 체크리스트",
+      },
+      {
+        text: "실제 학생들이 사용하는 프로젝트로",
+        img: "/images/clubu-studentuse.jpg",
+        pos: "center",
+        caption: "학교 학생들 앞에서 ClubU를 소개하는 발표 현장",
+      },
     ],
     highlight: "그리고 이 프로젝트로, 표창 수여 🏆",
   },
@@ -565,7 +609,7 @@ export default function CareerTrackPage() {
                     lineHeight: 1,
                   }}
                 >
-                  {s.value}
+                  <SlotNumber value={s.value} />
                 </div>
                 <div
                   style={{
@@ -633,7 +677,7 @@ export default function CareerTrackPage() {
                     lineHeight: 1,
                   }}
                 >
-                  {s.value}
+                  <SlotNumber value={s.value} />
                 </div>
                 <div
                   style={{
@@ -670,31 +714,35 @@ export default function CareerTrackPage() {
               marginBottom: 16,
             }}
           >
-            <p
-              style={{
-                margin: 0,
-                maxWidth: 760,
-                fontSize: "clamp(15px,1.8vw,18px)",
-                lineHeight: 1.7,
-                fontWeight: 400,
-                color: "rgba(240,242,246,.68)",
-              }}
-            >
-              단순히 만드는 것만으로는 부족해요.
-            </p>
-            <p
-              style={{
-                margin: "10px 0 0",
-                maxWidth: 760,
-                fontSize: "clamp(16px,2vw,20px)",
-                lineHeight: 1.7,
-                fontWeight: 800,
-              }}
-            >
-              포트폴리오 채우기용 프로젝트와{" "}
-              <span style={{ color: "#86C3FA" }}>실전 프로젝트</span>는 분명히
-              큰 차이가 있습니다.
-            </p>
+            <BlurReveal>
+              <p
+                style={{
+                  margin: 0,
+                  maxWidth: 760,
+                  fontSize: "clamp(15px,1.8vw,18px)",
+                  lineHeight: 1.7,
+                  fontWeight: 400,
+                  color: "rgba(240,242,246,.68)",
+                }}
+              >
+                단순히 만드는 것만으로는 부족해요.
+              </p>
+            </BlurReveal>
+            <BlurReveal delay={180}>
+              <p
+                style={{
+                  margin: "10px 0 0",
+                  maxWidth: 760,
+                  fontSize: "clamp(16px,2vw,20px)",
+                  lineHeight: 1.7,
+                  fontWeight: 800,
+                }}
+              >
+                포트폴리오 채우기용 프로젝트와{" "}
+                <span style={{ color: "#86C3FA" }}>실전 프로젝트</span>는 분명히
+                큰 차이가 있습니다.
+              </p>
+            </BlurReveal>
           </div>
 
           <p
@@ -831,33 +879,35 @@ export default function CareerTrackPage() {
               marginTop: 56,
             }}
           >
-            {moats.map((m) => (
-              <div key={m.n}>
-                <div style={{ fontSize: 15, fontWeight: 800, color: "#86C3FA" }}>
-                  {m.n}
+            {moats.map((m, i) => (
+              <ScrollReveal key={m.n} delay={i * 140}>
+                <div>
+                  <div style={{ fontSize: 15, fontWeight: 800, color: "#86C3FA" }}>
+                    {m.n}
+                  </div>
+                  <div
+                    style={{
+                      height: 1,
+                      background: "rgba(255,255,255,.12)",
+                      margin: "16px 0 18px",
+                    }}
+                  />
+                  <div style={{ fontSize: 21, fontWeight: 800, marginBottom: 12 }}>
+                    {m.title}
+                  </div>
+                  <p
+                    style={{
+                      margin: 0,
+                      fontSize: 15.5,
+                      lineHeight: 1.6,
+                      color: "rgba(240,242,246,.62)",
+                      fontWeight: 500,
+                    }}
+                  >
+                    {m.desc}
+                  </p>
                 </div>
-                <div
-                  style={{
-                    height: 1,
-                    background: "rgba(255,255,255,.12)",
-                    margin: "16px 0 18px",
-                  }}
-                />
-                <div style={{ fontSize: 21, fontWeight: 800, marginBottom: 12 }}>
-                  {m.title}
-                </div>
-                <p
-                  style={{
-                    margin: 0,
-                    fontSize: 15.5,
-                    lineHeight: 1.6,
-                    color: "rgba(240,242,246,.62)",
-                    fontWeight: 500,
-                  }}
-                >
-                  {m.desc}
-                </p>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
 
@@ -1056,30 +1106,120 @@ export default function CareerTrackPage() {
       {/* 비포 애프터 — 완성된 프로젝트가 쩜넷을 만나면 */}
       <section
         style={{
-          position: "relative",
-          overflow: "hidden",
-          isolation: "isolate",
           padding: "clamp(74px,9vw,128px) clamp(20px,5vw,56px)",
           background: "#0b0d15",
         }}
       >
-        {/* ClubU 화면 — 상단에 깔리고 아래로 갈수록 투명하게 사라짐 */}
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: "min(78vw, 720px)",
-            zIndex: -1,
-            background: `linear-gradient(180deg, rgba(11,13,21,.78), rgba(11,13,21,.42) 45%, rgba(11,13,21,.66) 100%), url("/images/clubu.png") center 24% / cover no-repeat`,
-            maskImage:
-              "linear-gradient(180deg, #000 0%, #000 42%, transparent 100%)",
-            WebkitMaskImage:
-              "linear-gradient(180deg, #000 0%, #000 42%, transparent 100%)",
-          }}
-        />
+        <style>{`
+          .jn-glass {
+            border-radius: 18px;
+            background: linear-gradient(115deg, rgba(255,255,255,.09), rgba(255,255,255,.015) 38%, rgba(134,195,250,.05) 72%, rgba(255,255,255,.04));
+            border: 1px solid rgba(255,255,255,.28);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.32), inset 0 -1px 0 rgba(255,255,255,.06), 0 16px 48px rgba(0,0,0,.38);
+            -webkit-backdrop-filter: blur(3px) saturate(1.9) brightness(1.12) contrast(1.05);
+            backdrop-filter: blur(3px) saturate(1.9) brightness(1.12) contrast(1.05);
+            transition: -webkit-backdrop-filter .5s ease, backdrop-filter .5s ease;
+          }
+          .jn-glass:hover {
+            -webkit-backdrop-filter: blur(5px) saturate(2.2) brightness(1.16) contrast(1.06);
+            backdrop-filter: blur(5px) saturate(2.2) brightness(1.16) contrast(1.06);
+          }
+          @supports (backdrop-filter: url('#jn-glass-distort')) {
+            .jn-glass {
+              backdrop-filter: url('#jn-glass-distort') blur(2px) saturate(1.9) brightness(1.1);
+            }
+            .jn-glass:hover {
+              backdrop-filter: url('#jn-glass-distort-anim') blur(2px) saturate(2.05) brightness(1.13);
+            }
+          }
+          .jn-shine-item { position: relative; }
+          .jn-shine-item .jn-preview {
+            position: absolute;
+            left: 26px;
+            bottom: calc(100% + 12px);
+            width: min(280px, 68vw);
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity .25s ease, transform .25s ease;
+            pointer-events: none;
+            z-index: 6;
+          }
+          .jn-shine-item:hover .jn-preview {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          .jn-shine-item:hover .jn-shine {
+            background-image: linear-gradient(100deg, currentColor 40%, #ffffff 50%, #86C3FA 55%, currentColor 64%);
+            background-size: 240% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: jnShine 1.5s linear infinite;
+          }
+          @keyframes jnShine {
+            0% { background-position: 130% 0; }
+            100% { background-position: -130% 0; }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .jn-shine-item:hover .jn-shine { animation: none; }
+          }
+        `}</style>
+        {/* 유리 왜곡용 SVG 필터 (지원 브라우저에서 backdrop 왜곡) */}
+        <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden>
+          <filter
+            id="jn-glass-distort"
+            x="-20%"
+            y="-20%"
+            width="140%"
+            height="140%"
+          >
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.008 0.014"
+              numOctaves="2"
+              seed="7"
+              result="noise"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale="26"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+          {/* 호버용 — 노이즈가 계속 흐르며 왜곡이 살아 움직임 */}
+          <filter
+            id="jn-glass-distort-anim"
+            x="-20%"
+            y="-20%"
+            width="140%"
+            height="140%"
+          >
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.008 0.014"
+              numOctaves="2"
+              seed="7"
+              result="noise"
+            >
+              <animate
+                attributeName="baseFrequency"
+                dur="7s"
+                values="0.008 0.014;0.012 0.018;0.006 0.011;0.008 0.014"
+                repeatCount="indefinite"
+              />
+            </feTurbulence>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="30" xChannelSelector="R" yChannelSelector="G">
+              <animate
+                attributeName="scale"
+                dur="5s"
+                values="26;36;26"
+                repeatCount="indefinite"
+              />
+            </feDisplacementMap>
+          </filter>
+        </svg>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <h2
             style={{
@@ -1110,159 +1250,214 @@ export default function CareerTrackPage() {
             </span>
             .
           </p>
+
+          {/* 큰 박스 — ClubU 화면이 상단에 보이고, 유리 카드는 아래쪽에 */}
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,300px),1fr))",
-              gap: 18,
+              position: "relative",
+              borderRadius: 24,
+              border: "1px solid rgba(255,255,255,.12)",
+              padding:
+                "clamp(260px,36vw,440px) clamp(22px,3.6vw,48px) clamp(22px,3.6vw,48px)",
+              backgroundColor: "#0b0d15",
+              background: `linear-gradient(180deg, rgba(7,8,12,.06), rgba(7,8,12,.22) 48%, rgba(11,13,21,.85) 76%, #0b0d15 90%), url("/images/clubu.jpg") center top / 100% auto no-repeat #0b0d15`,
             }}
           >
-            {/* BEFORE — 유리 카드 */}
             <div
               style={{
-                background: "rgba(13,15,22,.5)",
-                border: "1px solid rgba(255,255,255,.14)",
-                borderRadius: 18,
-                padding: 34,
-                backdropFilter: "blur(16px) saturate(1.2)",
-                WebkitBackdropFilter: "blur(16px) saturate(1.2)",
+                display: "grid",
+                gridTemplateColumns:
+                  "repeat(auto-fit,minmax(min(100%,300px),1fr))",
+                gap: 18,
               }}
             >
-              <div
-                style={{
-                  display: "inline-block",
-                  fontSize: 13,
-                  fontWeight: 800,
-                  letterSpacing: ".1em",
-                  color: "rgba(240,242,246,.4)",
-                  border: "1px solid rgba(255,255,255,.14)",
-                  padding: "5px 12px",
-                  borderRadius: 8,
-                  marginBottom: 14,
-                }}
-              >
-                BEFORE
+              {/* BEFORE — 유리 카드 */}
+              <div className="jn-glass" style={{ padding: 34 }}>
+                <div
+                  style={{
+                    display: "inline-block",
+                    fontSize: 13,
+                    fontWeight: 800,
+                    letterSpacing: ".1em",
+                    color: "rgba(240,242,246,.55)",
+                    border: "1px solid rgba(255,255,255,.25)",
+                    padding: "5px 12px",
+                    borderRadius: 8,
+                    marginBottom: 14,
+                  }}
+                >
+                  BEFORE
+                </div>
+                <div
+                  style={{
+                    fontSize: 17.5,
+                    fontWeight: 800,
+                    letterSpacing: "-.01em",
+                    color: "rgba(240,242,246,.85)",
+                    marginBottom: 18,
+                  }}
+                >
+                  {beforeAfter.before.label}
+                </div>
+                <ul
+                  style={{
+                    listStyle: "none",
+                    margin: 0,
+                    padding: 0,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 14,
+                  }}
+                >
+                  {beforeAfter.before.items.map((t) => (
+                    <li
+                      key={t}
+                      style={{
+                        display: "flex",
+                        gap: 10,
+                        fontSize: 15.5,
+                        lineHeight: 1.55,
+                        color: "rgba(240,242,246,.7)",
+                        fontWeight: 500,
+                      }}
+                    >
+                      <span
+                        aria-hidden
+                        style={{ color: "rgba(240,242,246,.45)", fontWeight: 800 }}
+                      >
+                        ✕
+                      </span>
+                      {t}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div
-                style={{
-                  fontSize: 17.5,
-                  fontWeight: 800,
-                  letterSpacing: "-.01em",
-                  color: "rgba(240,242,246,.75)",
-                  marginBottom: 18,
-                }}
-              >
-                {beforeAfter.before.label}
-              </div>
-              <ul
-                style={{
-                  listStyle: "none",
-                  margin: 0,
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 14,
-                }}
-              >
-                {beforeAfter.before.items.map((t) => (
-                  <li
-                    key={t}
-                    style={{
-                      display: "flex",
-                      gap: 10,
-                      fontSize: 15.5,
-                      lineHeight: 1.55,
-                      color: "rgba(240,242,246,.55)",
-                      fontWeight: 500,
-                    }}
-                  >
-                    <span aria-hidden style={{ color: "rgba(240,242,246,.35)", fontWeight: 800 }}>
-                      ✕
-                    </span>
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </div>
 
-            {/* AFTER — 유리 카드 */}
-            <div
-              style={{
-                background: "rgba(134,195,250,.09)",
-                border: "1px solid rgba(134,195,250,.45)",
-                borderRadius: 18,
-                padding: 34,
-                backdropFilter: "blur(16px) saturate(1.2)",
-                WebkitBackdropFilter: "blur(16px) saturate(1.2)",
-              }}
-            >
+              {/* AFTER — 유리 카드 · 항목 호버 시 미리보기 + 반짝임 */}
               <div
+                className="jn-glass"
                 style={{
-                  display: "inline-block",
-                  fontSize: 13,
-                  fontWeight: 800,
-                  letterSpacing: ".1em",
-                  color: "#00041A",
-                  background: "#86C3FA",
-                  padding: "5px 12px",
-                  borderRadius: 8,
-                  marginBottom: 14,
+                  padding: 34,
+                  background:
+                    "linear-gradient(115deg, rgba(134,195,250,.15), rgba(134,195,250,.03) 42%, rgba(134,195,250,.09))",
+                  borderColor: "rgba(134,195,250,.5)",
                 }}
               >
-                AFTER
+                <div
+                  style={{
+                    display: "inline-block",
+                    fontSize: 13,
+                    fontWeight: 800,
+                    letterSpacing: ".1em",
+                    color: "#00041A",
+                    background: "#86C3FA",
+                    padding: "5px 12px",
+                    borderRadius: 8,
+                    marginBottom: 14,
+                  }}
+                >
+                  AFTER
+                </div>
+                <div
+                  style={{
+                    fontSize: 17.5,
+                    fontWeight: 800,
+                    letterSpacing: "-.01em",
+                    marginBottom: 10,
+                  }}
+                >
+                  {beforeAfter.after.label}
+                </div>
+                <div
+                  style={{
+                    fontSize: "clamp(19px,2.3vw,25px)",
+                    fontWeight: 800,
+                    letterSpacing: "-.02em",
+                    lineHeight: 1.35,
+                    marginBottom: 18,
+                    color: "#F0F2F6",
+                  }}
+                >
+                  안정적인 배포를 위한 현업의 체계적인 업무 프로세스 적용
+                </div>
+                <ul
+                  style={{
+                    listStyle: "none",
+                    margin: 0,
+                    padding: 0,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 14,
+                  }}
+                >
+                  {beforeAfter.after.items.map((item) => (
+                    <li
+                      key={item.text}
+                      className="jn-shine-item"
+                      style={{
+                        display: "flex",
+                        gap: 10,
+                        fontSize: 15.5,
+                        lineHeight: 1.55,
+                        fontWeight: 600,
+                      }}
+                    >
+                      <span
+                        aria-hidden
+                        className="jn-shine"
+                        style={{ color: "#86C3FA", fontWeight: 800 }}
+                      >
+                        ✓
+                      </span>
+                      <span className="jn-shine" style={{ color: "#F0F2F6" }}>
+                        {item.text}
+                      </span>
+                      {/* 호버 미리보기 — 실제 자료 사진 + 설명 */}
+                      <span className="jn-preview" aria-hidden>
+                        <span
+                          style={{
+                            display: "block",
+                            aspectRatio: "16 / 10",
+                            borderRadius: 12,
+                            border: "1px solid rgba(255,255,255,.18)",
+                            background: `url("${item.img}") ${item.pos} / cover no-repeat rgba(7,8,12,.88)`,
+                            boxShadow: "0 12px 34px rgba(0,0,0,.55)",
+                          }}
+                        />
+                        <span
+                          style={{
+                            display: "block",
+                            marginTop: 8,
+                            background: "rgba(7,8,12,.92)",
+                            border: "1px solid rgba(255,255,255,.14)",
+                            borderRadius: 10,
+                            padding: "10px 12px",
+                            fontSize: 12.5,
+                            lineHeight: 1.5,
+                            color: "rgba(240,242,246,.82)",
+                            fontWeight: 600,
+                          }}
+                        >
+                          {item.caption}
+                        </span>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                <p
+                  style={{
+                    margin: "22px 0 0",
+                    paddingTop: 18,
+                    borderTop: "1px solid rgba(134,195,250,.35)",
+                    fontSize: "clamp(16px,1.9vw,19px)",
+                    fontWeight: 800,
+                    letterSpacing: "-.01em",
+                    color: "#86C3FA",
+                  }}
+                >
+                  {beforeAfter.after.highlight}
+                </p>
               </div>
-              <div
-                style={{
-                  fontSize: 17.5,
-                  fontWeight: 800,
-                  letterSpacing: "-.01em",
-                  marginBottom: 18,
-                }}
-              >
-                {beforeAfter.after.label}
-              </div>
-              <ul
-                style={{
-                  listStyle: "none",
-                  margin: 0,
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 14,
-                }}
-              >
-                {beforeAfter.after.items.map((t) => (
-                  <li
-                    key={t}
-                    style={{
-                      display: "flex",
-                      gap: 10,
-                      fontSize: 15.5,
-                      lineHeight: 1.55,
-                      color: "#F0F2F6",
-                      fontWeight: 600,
-                    }}
-                  >
-                    <span aria-hidden style={{ color: "#86C3FA", fontWeight: 800 }}>
-                      ✓
-                    </span>
-                    {t}
-                  </li>
-                ))}
-              </ul>
-              <p
-                style={{
-                  margin: "22px 0 0",
-                  paddingTop: 18,
-                  borderTop: "1px solid rgba(134,195,250,.25)",
-                  fontSize: "clamp(16px,1.9vw,19px)",
-                  fontWeight: 800,
-                  letterSpacing: "-.01em",
-                  color: "#86C3FA",
-                }}
-              >
-                {beforeAfter.after.highlight}
-              </p>
             </div>
           </div>
         </div>
@@ -1308,11 +1503,12 @@ export default function CareerTrackPage() {
               gap: "clamp(16px,2.4vw,24px)",
             }}
           >
-            {outcomes.map((o) => {
+            {outcomes.map((o, i) => {
               const vertical = o.fade === "vertical";
               return (
+              <ScrollReveal key={o.title}>
               <div
-                key={o.title}
+                className="jn-net-card"
                 style={{
                   position: "relative",
                   overflow: "hidden",
@@ -1321,23 +1517,21 @@ export default function CareerTrackPage() {
                   border: "1px solid rgba(255,255,255,.08)",
                   background: "#11131d",
                   padding: "clamp(30px,4.4vw,52px)",
-                  minHeight: vertical
-                    ? "clamp(400px,48vw,560px)"
-                    : "clamp(210px,26vw,300px)",
+                  minHeight: "clamp(400px,48vw,560px)",
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: vertical ? "flex-end" : "center",
+                  justifyContent: "flex-end",
                 }}
               >
-                {/* 배경 사진 — 세로형은 위에서 아래로, 가로형은 오른쪽에서 왼쪽으로 투명해지는 그래디언트에 덮임 */}
+                {/* 배경 사진 — 카드 높이에 맞춰 오른쪽에 크게. cropTop이 있으면 위쪽을 잘라냄 */}
                 <div
                   aria-hidden
                   style={{
                     position: "absolute",
                     inset: 0,
-                    background: vertical
-                      ? `url("${o.img}") right top / auto 100% no-repeat`
-                      : `url("${o.img}") right center / cover no-repeat`,
+                    background: o.cropTop
+                      ? `url("${o.img}") right bottom / auto calc(100% + ${o.cropTop}px) no-repeat`
+                      : `url("${o.img}") ${vertical ? "right top" : "right center"} / auto 100% no-repeat`,
                     zIndex: -2,
                   }}
                 />
@@ -1349,6 +1543,19 @@ export default function CareerTrackPage() {
                     background: vertical
                       ? "linear-gradient(180deg,rgba(17,19,29,.1) 0%,rgba(17,19,29,.5) 44%,#11131d 80%)"
                       : "linear-gradient(90deg,#11131d 0%,#11131d 42%,rgba(17,19,29,.72) 66%,rgba(17,19,29,.24) 100%)",
+                    zIndex: -1,
+                  }}
+                />
+                {/* 왼쪽 네트워크 그래픽 — 사진 앞 40px에서 끝나도록 폭 계산 (사진이 넓으면 어두운 영역까지만) */}
+                <NetworkGraph
+                  seed={i + 1}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    top: 0,
+                    height: "100%",
+                    width: `max(34%, calc(100% - clamp(400px,48vw,560px) * ${(o.imgAspect ?? 1).toFixed(3)} - 40px))`,
+                    opacity: 0.6,
                     zIndex: -1,
                   }}
                 />
@@ -1392,6 +1599,7 @@ export default function CareerTrackPage() {
                   {o.desc}
                 </p>
               </div>
+              </ScrollReveal>
               );
             })}
           </div>
@@ -1421,8 +1629,8 @@ export default function CareerTrackPage() {
 
           <div style={{ display: "flex", flexDirection: "column", marginTop: "clamp(40px,5vw,52px)" }}>
             {steps.map((s, i) => (
+              <ScrollReveal key={s.n} delay={i * 110} distance={36}>
               <div
-                key={s.n}
                 style={{
                   display: "grid",
                   gridTemplateColumns: "52px 1fr",
@@ -1497,6 +1705,7 @@ export default function CareerTrackPage() {
                   </p>
                 </div>
               </div>
+              </ScrollReveal>
             ))}
           </div>
 
@@ -1581,10 +1790,11 @@ export default function CareerTrackPage() {
               gap: 16,
             }}
           >
-            {teamRules.map((r) => (
+            {teamRules.map((r, i) => (
+              <ScrollReveal key={r.title} delay={i * 100} distance={40}>
               <div
-                key={r.title}
                 style={{
+                  height: "100%",
                   background: r.ok
                     ? "#11131d"
                     : "linear-gradient(160deg,rgba(255,139,139,.1),#11131d)",
@@ -1638,6 +1848,7 @@ export default function CareerTrackPage() {
                   {r.desc}
                 </p>
               </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>

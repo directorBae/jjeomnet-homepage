@@ -1,34 +1,40 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
+
 /**
- * 오로라형 그래디언트 배경 섹션.
- * - 네 개의 컬러 블롭이 천천히 떠다니며 극적인 그래디언트 필드를 만들고,
- * - 커서 위치(--jn-nx/--jn-ny, -1~1)에 따라 블롭마다 다른 방향·깊이로 밀리며
- *   배경 전체가 굴곡지는 것처럼 반응합니다. (이중 래퍼: 바깥=커서 패럴랙스, 안쪽=드리프트 애니메이션)
- * - 커서를 따라오는 글로우가 굴곡의 중심을 밝힙니다.
- * - 터치 기기·reduced-motion에서는 정적인 그래디언트만 보입니다.
+ * 쩜넷 브랜드 4색(Spark 노랑 · Connect 초록 · Growth 파랑 · Infinity 보라)이
+ * 8개의 초점으로 얽힌 화사한 풀섹션 그래디언트.
+ * - 커서가 움직이면 초점들이 서로 다른 방향으로 밀리며 필드가 굴곡지고,
+ * - 커서 주변에는 색 레이어만(어두운 베이스 제외) 더 크게 뒤틀린 버전이
+ *   원형 마스크로 겹쳐져 어두워지지 않고 색만 왜곡되며,
+ * - 그 왜곡 영역의 색상(hue)이 랜덤 워크로 조금씩 계속 변한다.
+ * - 모든 값은 rAF 보간, 유휴 시에도 사인 드리프트로 천천히 흐름.
  */
 
-const GLOW_SIZE = 560;
+// 브랜드 키 컬러 (채도 높은 버전)
+const YELLOW = '250,223,75'; // Spark
+const GREEN = '94,244,121'; // Connect
+const BLUE = '134,195,250'; // Growth
+const PURPLE = '155,92,255'; // Infinity
 
-type Blob = {
-  size: number;
-  color: string;
-  left: string;
-  top: string;
-  /** 커서 패럴랙스 계수(px) — 부호가 다르면 서로 반대로 밀려 굴곡이 생김 */
-  fx: number;
-  fy: number;
-  anim: string;
-  ease: string;
-};
+/** 색 초점 8개 스택 — mult로 커서 굴곡 배율 조절 (베이스 미포함) */
+function colorField(mult: number) {
+  const m = (v: number) => (v * mult).toFixed(1);
+  return `
+    radial-gradient(52% 46% at calc(16% + var(--jn-nx, 0) * ${m(16)}%) calc(10% + var(--jn-ny, 0) * ${m(13)}%), rgba(${BLUE},.3), transparent 64%),
+    radial-gradient(44% 40% at calc(64% - var(--jn-nx, 0) * ${m(12)}%) calc(4% + var(--jn-ny, 0) * ${m(16)}%), rgba(${PURPLE},.26), transparent 62%),
+    radial-gradient(40% 38% at calc(90% + var(--jn-nx, 0) * ${m(10)}%) calc(24% - var(--jn-ny, 0) * ${m(12)}%), rgba(${GREEN},.2), transparent 60%),
+    radial-gradient(46% 42% at calc(38% - var(--jn-nx, 0) * ${m(18)}%) calc(44% + var(--jn-ny, 0) * ${m(10)}%), rgba(${YELLOW},.16), transparent 62%),
+    radial-gradient(48% 44% at calc(78% + var(--jn-nx, 0) * ${m(15)}%) calc(62% + var(--jn-ny, 0) * ${m(14)}%), rgba(${BLUE},.22), transparent 62%),
+    radial-gradient(42% 40% at calc(8% - var(--jn-nx, 0) * ${m(13)}%) calc(72% - var(--jn-ny, 0) * ${m(15)}%), rgba(${GREEN},.18), transparent 60%),
+    radial-gradient(46% 44% at calc(52% + var(--jn-nx, 0) * ${m(11)}%) calc(96% - var(--jn-ny, 0) * ${m(12)}%), rgba(${PURPLE},.24), transparent 62%),
+    radial-gradient(40% 38% at calc(30% - var(--jn-nx, 0) * ${m(14)}%) calc(88% + var(--jn-ny, 0) * ${m(16)}%), rgba(${YELLOW},.18), transparent 60%)
+  `;
+}
 
-const BLOBS: Blob[] = [
-  { size: 680, color: 'rgba(134,195,250,.2)', left: '4%', top: '-10%', fx: 52, fy: 38, anim: 'jnBlobA 19s ease-in-out infinite alternate', ease: '.45s' },
-  { size: 560, color: 'rgba(165,148,247,.17)', left: '56%', top: '2%', fx: -68, fy: 46, anim: 'jnBlobB 23s ease-in-out infinite alternate', ease: '.6s' },
-  { size: 600, color: 'rgba(94,244,121,.12)', left: '68%', top: '52%', fx: 42, fy: -58, anim: 'jnBlobC 21s ease-in-out infinite alternate', ease: '.5s' },
-  { size: 540, color: 'rgba(255,186,186,.13)', left: '8%', top: '58%', fx: -50, fy: -40, anim: 'jnBlobB 25s ease-in-out infinite alternate', ease: '.7s' },
-];
+const BASE =
+  'linear-gradient(165deg, #131736 0%, #0d1020 48%, #121430 100%)';
 
 export default function CursorGlowSection({
   children,
@@ -37,25 +43,73 @@ export default function CursorGlowSection({
   children: React.ReactNode;
   style?: React.CSSProperties;
 }) {
+  const secRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const el = secRef.current;
+    if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let tnx = 0, tny = 0, cnx = 0, cny = 0; // 초점 굴곡 (-1~1)
+    let tpx = 50, tpy = 50, cpx = 50, cpy = 50; // 왜곡 렌즈 중심 (%)
+    let tdo = 0, cdo = 0; // 왜곡 렌즈 강도 (0~1)
+    let tHue = 0, cHue = 0; // 렌즈 색상 랜덤 워크 (deg)
+    let nextHueAt = 0;
+    let raf = 0;
+    const t0 = performance.now();
+
+    const onMove = (e: MouseEvent) => {
+      const r = el.getBoundingClientRect();
+      const rx = (e.clientX - r.left) / r.width;
+      const ry = (e.clientY - r.top) / r.height;
+      tnx = rx * 2 - 1;
+      tny = ry * 2 - 1;
+      tpx = rx * 100;
+      tpy = ry * 100;
+      tdo = 1;
+    };
+    const onLeave = () => {
+      tnx = 0;
+      tny = 0;
+      tdo = 0;
+    };
+    const tick = (now: number) => {
+      const t = (now - t0) / 1000;
+      const ix = Math.sin(t * 0.21) * 0.2;
+      const iy = Math.cos(t * 0.16) * 0.2;
+      // 커서 부근 색상 랜덤 워크 — 0.6~1.6초마다 새 목표 hue로
+      if (now >= nextHueAt) {
+        tHue = (Math.random() - 0.5) * 120;
+        nextHueAt = now + 600 + Math.random() * 1000;
+      }
+      cnx += (tnx + ix - cnx) * 0.055;
+      cny += (tny + iy - cny) * 0.055;
+      cpx += (tpx - cpx) * 0.12;
+      cpy += (tpy - cpy) * 0.12;
+      cdo += (tdo - cdo) * 0.08;
+      cHue += (tHue - cHue) * 0.03;
+      el.style.setProperty('--jn-nx', cnx.toFixed(4));
+      el.style.setProperty('--jn-ny', cny.toFixed(4));
+      el.style.setProperty('--jn-px', `${cpx.toFixed(2)}%`);
+      el.style.setProperty('--jn-py', `${cpy.toFixed(2)}%`);
+      el.style.setProperty('--jn-do', cdo.toFixed(3));
+      el.style.setProperty('--jn-hue', `${cHue.toFixed(1)}deg`);
+      raf = requestAnimationFrame(tick);
+    };
+
+    el.addEventListener('mousemove', onMove);
+    el.addEventListener('mouseleave', onLeave);
+    raf = requestAnimationFrame(tick);
+    return () => {
+      cancelAnimationFrame(raf);
+      el.removeEventListener('mousemove', onMove);
+      el.removeEventListener('mouseleave', onLeave);
+    };
+  }, []);
+
   return (
     <section
-      onMouseMove={(e) => {
-        const el = e.currentTarget;
-        const rect = el.getBoundingClientRect();
-        const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-        const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
-        el.style.setProperty('--jn-nx', nx.toFixed(3));
-        el.style.setProperty('--jn-ny', ny.toFixed(3));
-        el.style.setProperty('--jn-glow-x', `${e.clientX - rect.left - GLOW_SIZE / 2}px`);
-        el.style.setProperty('--jn-glow-y', `${e.clientY - rect.top - GLOW_SIZE / 2}px`);
-        el.style.setProperty('--jn-glow-o', '1');
-      }}
-      onMouseLeave={(e) => {
-        const el = e.currentTarget;
-        el.style.setProperty('--jn-nx', '0');
-        el.style.setProperty('--jn-ny', '0');
-        el.style.setProperty('--jn-glow-o', '0');
-      }}
+      ref={secRef}
       style={{
         position: 'relative',
         overflow: 'hidden',
@@ -63,92 +117,32 @@ export default function CursorGlowSection({
         ...style,
       }}
     >
-      <style>{`
-        @keyframes jnBlobA {
-          0% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(46px, -34px) scale(1.1); }
-          100% { transform: translate(-30px, 26px) scale(.94); }
-        }
-        @keyframes jnBlobB {
-          0% { transform: translate(0, 0) scale(1.05); }
-          50% { transform: translate(-40px, 30px) scale(.95); }
-          100% { transform: translate(28px, -38px) scale(1.08); }
-        }
-        @keyframes jnBlobC {
-          0% { transform: translate(0, 0) scale(.96); }
-          50% { transform: translate(34px, 40px) scale(1.08); }
-          100% { transform: translate(-42px, -26px) scale(1); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .jn-blob-inner { animation: none !important; }
-          .jn-blob-outer { transition: none !important; }
-        }
-      `}</style>
-
-      {/* 베이스 틴트 — 대각선으로 흐르는 은은한 색 층 */}
+      {/* 기본 그래디언트 필드 (색 + 베이스) */}
       <div
         aria-hidden
         style={{
           position: 'absolute',
           inset: 0,
-          zIndex: -3,
-          background:
-            'linear-gradient(135deg, rgba(134,195,250,.07) 0%, transparent 38%, rgba(165,148,247,.06) 62%, transparent 88%)',
+          zIndex: -2,
           pointerEvents: 'none',
+          background: `${colorField(1)}, ${BASE}`,
         }}
       />
-
-      {/* 오로라 블롭들 — 커서에 따라 서로 다른 방향으로 밀리며 굴곡 생성 */}
-      {BLOBS.map((b, i) => (
-        <div
-          key={i}
-          aria-hidden
-          className="jn-blob-outer"
-          style={{
-            position: 'absolute',
-            left: b.left,
-            top: b.top,
-            width: b.size,
-            height: b.size,
-            zIndex: -2,
-            transform: `translate3d(calc(var(--jn-nx, 0) * ${b.fx}px), calc(var(--jn-ny, 0) * ${b.fy}px), 0)`,
-            transition: `transform ${b.ease} cubic-bezier(.22,.9,.3,1)`,
-            willChange: 'transform',
-            pointerEvents: 'none',
-          }}
-        >
-          <div
-            className="jn-blob-inner"
-            style={{
-              width: '100%',
-              height: '100%',
-              borderRadius: '50%',
-              background: `radial-gradient(circle, ${b.color}, transparent 68%)`,
-              animation: b.anim,
-            }}
-          />
-        </div>
-      ))}
-
-      {/* 커서 글로우 — 굴곡의 중심을 밝힘 */}
+      {/* 왜곡 렌즈 — 색 레이어만 크게 뒤틀어 겹침(어두워지지 않음) + 랜덤 hue 변조 */}
       <div
         aria-hidden
         style={{
           position: 'absolute',
-          left: 0,
-          top: 0,
-          width: GLOW_SIZE,
-          height: GLOW_SIZE,
-          borderRadius: '50%',
-          background:
-            'radial-gradient(circle, rgba(134,195,250,.15), rgba(134,195,250,.05) 45%, transparent 68%)',
-          transform:
-            'translate3d(var(--jn-glow-x, -9999px), var(--jn-glow-y, -9999px), 0)',
-          opacity: 'var(--jn-glow-o, 0)' as unknown as number,
-          transition: 'transform .18s ease-out, opacity .35s ease',
-          willChange: 'transform',
-          pointerEvents: 'none',
+          inset: 0,
           zIndex: -1,
+          pointerEvents: 'none',
+          opacity: 'var(--jn-do, 0)' as unknown as number,
+          background: colorField(3.2),
+          filter: 'hue-rotate(var(--jn-hue, 0deg)) saturate(1.35)',
+          maskImage:
+            'radial-gradient(min(360px, 38vw) circle at var(--jn-px, 50%) var(--jn-py, 50%), black, rgba(0,0,0,.45) 55%, transparent 80%)',
+          WebkitMaskImage:
+            'radial-gradient(min(360px, 38vw) circle at var(--jn-px, 50%) var(--jn-py, 50%), black, rgba(0,0,0,.45) 55%, transparent 80%)',
         }}
       />
       {children}

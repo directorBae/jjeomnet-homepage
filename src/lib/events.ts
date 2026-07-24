@@ -25,7 +25,7 @@ export const EVENTS: JnEvent[] = [
     slug: 'it-arena',
     name: 'IT Arena',
     date: '2025.10',
-    concept: '로봇·AI·게임·알고리즘 등 6개 IT 분야를 아우르는 IT 페스티벌. 6개 과학기술원이 함께했어요.',
+    concept: '로봇·AI·게임·알고리즘 등 6개 IT 분야를 아우르는 IT 페스티벌. 6개 과학기술특성화대학이 함께했어요.',
     photo: '/images/it-arena.jpg',
     color: '#86C3FA',
   },

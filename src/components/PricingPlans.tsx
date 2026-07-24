@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Modal from './Modal';
 import { SITE } from '@/lib/site';
-import { COHORT } from '@/lib/cohort';
 
 type Plan = {
   key: string;
@@ -35,14 +34,14 @@ const PLANS: Plan[] = [
     extendMonthly: '월 ₩29,900',
     icon: '/images/icon-spark.svg',
     tagline: '아이디어에 불을 붙여, 실제 배포까지.',
-    recommend: '첫 완주를 노리는 1~2학년, 군입대·교환학생 등 일정이 정해진 분 추천',
+    recommend: '첫 완주를 노리는 분들께 추천',
     highlights: ['첫 미팅에서 멘토가 기획·일정 설계', '무료 배포 + .jjeom.net 도메인', '멘토링 세션 · 월 1회'],
     features: [
-      '3개월 옵션 과정 — 첫 미팅에서 멘토가 기획·일정 설계 (군입대 등 일정이 정해진 분께 추천)',
+      '3개월 옵션 과정 — 첫 미팅에서 멘토가 기획·일정 설계',
       '무료 SaaS형 배포 + .jjeom.net 도메인',
       '프로젝트 코칭',
       '멘토링 세션 · 월 1회',
-      '월 1회 정기 모임 (프로젝트 참여자 대상)',
+      '월 1회 정기 모임 티켓',
       '바닐라쩜넷 네트워킹 참여',
       '커뮤니티 프로젝트 · 팀 매칭',
     ],
@@ -57,11 +56,11 @@ const PLANS: Plan[] = [
     extendMonthly: '월 ₩69,900',
     icon: '/images/icon-growth.svg',
     tagline: '프로젝트에서 실전 커리어로.',
-    recommend: '취업을 앞둔 3~4학년 추천',
+    recommend: '취·창업 등 실전 커리어가 필요한 분 추천',
     highlights: ['Spark의 모든 혜택 포함', 'LinkedIn 커리어 코칭 — 규모 키우기', '멘토링 세션 · 2주 1회'],
     features: [
-      '6개월 완주 과정 — Spark의 모든 혜택 포함 (월 1회 정기 모임 등)',
-      'LinkedIn 커리어 코칭 — 프로필 가꾸기 · 글쓰기 · 1촌 네트워킹 (네이버·당근·레브잇 동시 오퍼 멘토 담당)',
+      'Spark의 모든 혜택 포함 (월 1회 정기 모임 등)',
+      'LinkedIn 커리어 코칭 — 프로필 가꾸기 · 글쓰기 · 1촌 네트워킹',
       '멘토링 세션 · 2주 1회 (Spark의 2배)',
       '포트폴리오 코칭',
       '.net 도메인 지원',
@@ -74,11 +73,9 @@ const PLANS: Plan[] = [
 ];
 
 const POLICIES = [
-  `1기는 ${COHORT.kickoff} 킥오프 → ${COHORT.finish} 수료 — Growth 6개월 · Spark 3개월 옵션(${COHORT.optionFinish} 수료)`,
-  `납부는 기수 참여 기간(6개월 또는 3개월) 동안 — 결제는 킥오프(${COHORT.kickoff})부터 시작돼요`,
-  '기수가 끝나도 커뮤니티·행사·디스코드 멤버십은 계속돼요 — 원하면 월 단위 연장(Spark 월 ₩29,900 · Growth 월 ₩69,900)',
-  'Spark ↔ Growth 자유롭게 업그레이드 · 다운그레이드',
-  '커뮤니티(디스코드) 입장은 무료 — 1기 신청은 신청 폼에서 진행',
+  '납부는 기수 참여 기간(6개월 또는 3개월) 동안 분납 혹은 일시납 가능',
+  '기수가 끝나도 커뮤니티·행사·디스코드 멤버십은 계속돼요 — 원하면 월 단위 연장(Spark 월 ₩29,900 · Growth 월 ₩69,900) 혹은 3개월 및 6개월 트랙 단위로 재결제 가능',
+  '3개월 및 6개월 트랙 단위로 재결제 시 할인 혜택 적용 (Spark 49,900, Growth 199,900)',
 ];
 
 /** Spark / Growth 차이를 한눈에 */
@@ -166,6 +163,7 @@ export default function PricingPlans() {
             aria-label={`${p.name} 요금제 혜택 자세히 보기`}
             className="card-link"
             style={{
+              position: 'relative',
               textAlign: 'left',
               cursor: 'pointer',
               background: p.featured ? 'linear-gradient(180deg,rgba(134,195,250,.09),#11131d)' : '#11131d',
@@ -179,6 +177,23 @@ export default function PricingPlans() {
               font: 'inherit',
             }}
           >
+            {p.featured && (
+              <span
+                style={{
+                  position: 'absolute',
+                  top: 20,
+                  right: 20,
+                  fontSize: 12.5,
+                  fontWeight: 800,
+                  color: '#00041A',
+                  background: '#86C3FA',
+                  padding: '5px 13px',
+                  borderRadius: 999,
+                }}
+              >
+                추천
+              </span>
+            )}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={p.icon} alt="" width={46} height={46} aria-hidden style={{ width: 46, height: 46, objectFit: 'contain' }} />
             <div style={{ fontSize: 24, fontWeight: 800 }}>{p.name}</div>

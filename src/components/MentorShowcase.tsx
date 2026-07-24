@@ -6,6 +6,7 @@
  */
 
 import CareerCursorTrail from './CareerCursorTrail';
+import ScrollReveal from './ScrollReveal';
 
 type Mentor = {
   tag: string;
@@ -95,11 +96,11 @@ export default function MentorShowcase({ extra }: { extra?: React.ReactNode }) {
           gap: 18,
         }}
       >
-      {MENTORS.map((m) => (
+      {MENTORS.map((m, i) => (
+        <ScrollReveal key={m.tag} delay={i * 90}>
         <div
-          key={m.tag}
           className="mentor-card"
-          style={{ borderRadius: 20, padding: 'clamp(26px,3vw,34px)' }}
+          style={{ height: '100%', borderRadius: 20, padding: 'clamp(26px,3vw,34px)' }}
         >
           <div
             style={{
@@ -163,8 +164,11 @@ export default function MentorShowcase({ extra }: { extra?: React.ReactNode }) {
             ))}
           </ul>
         </div>
+        </ScrollReveal>
         ))}
-        {extra}
+        {extra ? (
+          <ScrollReveal delay={MENTORS.length * 90}>{extra}</ScrollReveal>
+        ) : null}
       </div>
     </>
   );

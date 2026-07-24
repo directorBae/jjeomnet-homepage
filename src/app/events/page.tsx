@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import NoiseHoverImage from '@/components/NoiseHoverImage';
+import ScrollReveal from '@/components/ScrollReveal';
 import JsonLd from '@/components/JsonLd';
 import { EVENTS } from '@/lib/events';
 import { SITE_URL } from '@/lib/site';
@@ -94,7 +95,10 @@ export default function EventsPage() {
               alignItems: 'center',
             }}
           >
-            <NoiseHoverImage src={ev.photo} alt={`${ev.name} 현장`} color={ev.color} ratio="4 / 3" radius={18} sizes="(max-width: 900px) 100vw, 500px" />
+            <ScrollReveal>
+              <NoiseHoverImage src={ev.photo} alt={`${ev.name} 현장`} color={ev.color} ratio="4 / 3" radius={18} sizes="(max-width: 900px) 100vw, 500px" />
+            </ScrollReveal>
+            <ScrollReveal delay={130}>
             <div>
               <span
                 style={{
@@ -130,6 +134,7 @@ export default function EventsPage() {
                 </a>
               )}
             </div>
+            </ScrollReveal>
           </div>
         </section>
       ))}
